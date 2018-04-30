@@ -7,8 +7,8 @@ public class GUI{
   public static void main(String[] args) { 
     JFrame frame = new JFrame("Music Resource Sign Out");
     JPanel cards;
-    final String BUTTONPANEL = "JPanel with JButtons";
-    final String TEXTPANEL = "JPanel with JTextField";
+    final String BUTTONPANEL = "Instrument";
+    final String TEXTPANEL = "Sheet Music";
     
     JPanel comboBoxPane = new JPanel();
     String comboBoxItems[] = { BUTTONPANEL, TEXTPANEL };
@@ -28,7 +28,7 @@ public class GUI{
     cards.add(card1, BUTTONPANEL);
     cards.add(card2, TEXTPANEL);
     frame.add(cards);
-    
+    frame.add(comboBoxPane);
     //set to visible
     frame.setVisible (true);
     comboBoxPane.setVisible(true);
