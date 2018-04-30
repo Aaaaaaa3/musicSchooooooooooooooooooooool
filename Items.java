@@ -7,13 +7,13 @@ public class Items {
   private String descr;
   private String num;
   
-  String stu = "";
-  String dueDate;//change into appropriate thing later
+  private Student stu;
+  private String dueDate;//change into appropriate thing later
   
   /********************************************************* the constructors ***********************************************/
   //default constructor
   public Items() { 
-    `}
+    }
   
   public Items(boolean condition, String name, String description, String num){
     this.condition = condition;
@@ -38,7 +38,7 @@ public class Items {
     return this.num;
   }
   
-  public String getStudent(){
+  public Student getStudent(){
     return this.stu;
   }
   
@@ -47,7 +47,7 @@ public class Items {
   }
   /********************************************************* the set methods ***********************************************/
   
-  public void setStudent(String student){
+  public void setStudent(Student student){
     this.stu = student;
   }
   
