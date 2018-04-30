@@ -1,3 +1,4 @@
+
 /**
  * Template for insturments, equipment and sheet music
  */
@@ -7,7 +8,7 @@ public class Items {
   private String descr;
   private String num;
   
-  private Student stu;
+  private Person stu;
   private String dueDate;//change into appropriate thing later
   
   /********************************************************* the constructors ***********************************************/
@@ -38,7 +39,7 @@ public class Items {
     return this.num;
   }
   
-  public Student getStudent(){
+  public Person getPerson(){
     return this.stu;
   }
   
@@ -47,7 +48,7 @@ public class Items {
   }
   /********************************************************* the set methods ***********************************************/
   
-  public void setStudent(Student student){
+  public void setPerson(Person student){
     this.stu = student;
   }
   
