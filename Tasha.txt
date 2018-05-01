@@ -1,7 +1,0 @@
-Flute_1 true 1 341153468 5/28/2018 "First flute"
-Flute_2 false 2 "Dented Mouthpiece, out to repairs"
-Trombone_1 true 1 "First trombone"
-Tuba_1 true 1 323947408 4/28/2018 "First tuba"
-
-Format:
-Name condition(0/1) number student dueDate description
