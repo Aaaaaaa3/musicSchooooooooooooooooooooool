@@ -2,3 +2,6 @@ Flute_1 1 1 "First flute" 341153468 5/28/2018
 Flute_2 0 2 "Dented Mouthpiece, out to repairs"
 Trombone_1 1 1 "First trombone"
 Tuba_1 1 1 "First tuba" 323947408 4/28/2018
+
+Format:
+Name condition(0/1) number description student dueDate
