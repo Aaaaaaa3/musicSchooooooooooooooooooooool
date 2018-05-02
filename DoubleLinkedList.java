@@ -43,7 +43,7 @@ class DoubleLinkedList<E> {
   public E remove(int index) { //removes an element of the list
     int counter=0;
     if (index==0){ //if you need to remove the first item
-      head=new Node<E>(head.getNext().getItem(), head.getNext().getNext());
+      head=new Node<E>(head.getNext().getItem(), head, head.getNext().getNext());
     }
     Node <E> tempNode=head;
     while (tempNode!=null){
