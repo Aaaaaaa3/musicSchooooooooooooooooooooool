@@ -14,6 +14,8 @@ public class Main {
   public static void main(String[] args) { 
     
     SimpleLinkedList<Items> list = new SimpleLinkedList<Items>();
+    
+    //read in the music file
     try {
       File file = new File("Tasha.txt");
       Scanner fileInput = new Scanner(file);
