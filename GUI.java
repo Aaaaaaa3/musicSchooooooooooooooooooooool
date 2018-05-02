@@ -22,9 +22,9 @@ public class GUI extends JPanel{
     JTextField instrument = new JTextField("Instrument");
     JTextField sheetMusic = new JTextField ("Sheet Music");
     JTextField equipment = new JTextField ("Equipment");
-    JTextField condition1 = new JTextField("Condition");
-    JTextField condition2 = new JTextField("Condition");
-    JTextField condition3 = new JTextField("Condition");
+    JCheckBox condition1 = new JCheckBox("Good condition?");
+    JCheckBox condition2 = new JCheckBox("Good condition?");
+    JCheckBox condition3 = new JCheckBox("Good condition?");
     JButton signOut1 = new JButton ("Sign Out");
     JButton signOut2 = new JButton ("Sign Out");
     JButton signOut3 = new JButton ("Sign Out");
