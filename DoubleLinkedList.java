@@ -1,3 +1,4 @@
+
 // ********************** Simple Linked List class in the linked list *********
 class DoubleLinkedList<E> { 
   private Node<E> head;//first item in the list
@@ -39,8 +40,26 @@ class DoubleLinkedList<E> {
     return 0;
   }
   
-  public E remove() { //removes the first thing in the list
-    head=head.getNext();
+  public E remove(int index) { //removes an element of the list
+    int counter=0;
+    if (index==0){ //if you need to remove the first item
+      head=new Node<E>(head.getNext().getItem(), head.getNext().getNext());
+    }
+    Node <E> tempNode=head;
+    while (tempNode!=null){
+      //compare the values
+      if ((counter+1)==index){ //if the next item is what you want to remove
+        System.out.println ("Removing: " + tempNode.getNext().getItem());
+        if (tempNode.getNext().getNext()!=null){
+          tempNode.setNext(tempNode.getNext().getNext());
+        }                                
+        else{ //last item in the list
+          tempNode.setNext(null);
+        }
+      }
+      tempNode=tempNode.getNext(); 
+      counter++;
+    }
     return null;
   }
   
