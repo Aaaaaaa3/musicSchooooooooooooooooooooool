@@ -1,5 +1,10 @@
+/* DoubleLinkedList<E>.java
+ * Julia Zhao and Tasha Xiao
+ * May 03 2018
+ * Version 1.0.0
+ * Program for the double linked list
+ */
 
-// ********************** Simple Linked List class in the linked list *********
 class DoubleLinkedList<E> { 
   private Node<E> head;//first item in the list
   private Node <E> tail;//last item in the list
@@ -85,12 +90,27 @@ class DoubleLinkedList<E> {
     return counter;
   }
   
+  //insertion
   public void sortAlpha(DoubleLinkedList<String> a){
     for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
       String item = a.get(i); //pivot element
       
       while (index>=0 && a.get(index).compareTo(item)>0){
+        a.set(index+1, a.get(index)); //move the element one position down
+        index--;
+      }
+      
+      a.set(index+1,item); //insert item in proper position
+    }
+  }
+  
+  public void sortChrono(DoubleLinkedList<String> a){
+    for (int i=1; i<a.size(); i++){ //starts at 2nd element
+      int index=i-1;
+      String item = a.get(i); //pivot element
+      
+      while (index>=0 && a.get(index).compareTo(item)<0){
         a.set(index+1, a.get(index)); //move the element one position down
         index--;
       }
