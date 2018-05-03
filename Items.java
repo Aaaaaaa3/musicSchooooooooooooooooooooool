@@ -31,7 +31,7 @@ public class Items {
     System.out.println("Condition: " + this.condition);
     System.out.println("Description: "+ this.descr);
     if(this.stu != null){
-      System.out.println("Student: " + this.stu.name);//getName());
+      System.out.println("Student: " + this.stu.getName());
 //      Date date = new Date();
 //      System.out.println("Due date: " + this.dueDate.format(date));
       System.out.println("Due date: " + this.dueDate);
