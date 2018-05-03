@@ -26,6 +26,14 @@ class DoubleLinkedList<E> {
     return tempNode.getItem();
   }
   
+  public void set(int index, E item) { //gets the value of item at index
+    Node<E> tempNode = head;
+    for (int i=0; i<index; i++){
+      tempNode=tempNode.getNext();   
+    }
+    tempNode.setItem(item);
+  }
+  
   public int indexOf(E item) { //returns index of item
     Node<E> tempNode = head;
     int counter=0;
@@ -37,7 +45,7 @@ class DoubleLinkedList<E> {
       tempNode=tempNode.getNext(); 
       counter++;
     }
-    return 0;
+    return counter;
   }
   
   public E remove(int index) { //removes an element of the list
@@ -75,5 +83,19 @@ class DoubleLinkedList<E> {
       tempNode=tempNode.getNext();
     }
     return counter;
+  }
+  
+  public void sortAlpha(DoubleLinkedList<String> a){
+    for (int i=1; i<a.size(); i++){
+      int index=i-1;
+      String item = a.get(i);
+      
+      while (index>=0 && a.get(index).compareTo(item)>1){
+        a.set(index+1, a.get(index)); //move the element one position down
+        index--;
+      }
+      
+      a.set(index+1,item); //insert item in proper position
+    }
   }
 }
