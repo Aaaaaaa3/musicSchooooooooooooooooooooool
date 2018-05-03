@@ -86,11 +86,11 @@ class DoubleLinkedList<E> {
   }
   
   public void sortAlpha(DoubleLinkedList<String> a){
-    for (int i=1; i<a.size(); i++){
+    for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
-      String item = a.get(i);
+      String item = a.get(i); //pivot element
       
-      while (index>=0 && a.get(index).compareTo(item)>1){
+      while (index>=0 && a.get(index).compareTo(item)>0){
         a.set(index+1, a.get(index)); //move the element one position down
         index--;
       }
