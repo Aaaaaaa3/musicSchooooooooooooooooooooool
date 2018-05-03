@@ -11,7 +11,7 @@ public class Items {
   private String num;
   
   private Person stu;
-  private SimpleDateFormat dueDate;//change into appropriate thing later
+  private String dueDate;//change into appropriate thing later
   
   /********************************************************* the constructors ***********************************************/
   //default constructor
@@ -32,8 +32,9 @@ public class Items {
     System.out.println("Description: "+ this.descr);
     if(this.stu != null){
       System.out.println("Student: " + this.stu.name);//getName());
-      Date date = new Date();
-      System.out.println("Due date: " + this.dueDate.format(date));
+//      Date date = new Date();
+//      System.out.println("Due date: " + this.dueDate.format(date));
+      System.out.println("Due date: " + this.dueDate);
     }
     
   }
@@ -58,7 +59,7 @@ public class Items {
     return this.stu;
   }
   
-  public SimpleDateFormat getDate(){
+  public String getDate(){
     return this.dueDate;
   }
   /********************************************************* the set methods ***********************************************/
@@ -71,7 +72,7 @@ public class Items {
     this.descr = descr;
   }
   
-  public void setDate(SimpleDateFormat date){
+  public void setDate(String date){
     this.dueDate = date;
   }
   
