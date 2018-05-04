@@ -3,6 +3,9 @@
  * Add and remove students
  * 
  * Finished: txt file read in & saved to list
+ * 
+ * Add in: proper student/due date
+ * 
  */
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,31 +14,26 @@ import java.util.Scanner;
 
 public class Main {
   
-    public Person checkStudent (int num, DoubleLinkedList<Person> students){
-    int index=0;
-    while (index < students.size()){
-      if (num==students.get(index).getNum()){
-        return students.get(index);
-      }
-      index++;
-    }
-    return null;
-  }
-  
-    public static Items checkItem (String input, DoubleLinkedList<Items> list){
-      for (int i = 0; i<list.size(); i++){
-      if (input.equals(list.get(i).getName())){
-        return list.get(i);
+  //reads in students from txt
+  public static DoubleLinkedList<Person> readStudents (){
+    DoubleLinkedList<Person> students = new DoubleLinkedList<Person>();
+    try{
+      Scanner read = new Scanner (new File ("students.txt"));
+      while (read.hasNextLine()){
+        Person newPerson = new Person();
+        newPerson.setNum(read.nextInt());
+        newPerson.setName(read.nextLine());
+        students.add(newPerson);
       }
     }
-    return null;
+    catch(Exception e){
+    }
+    System.out.println ("DONE");
+    return students;
   }
-  
-  public static void main(String[] args) { 
-    
-    SimpleLinkedList<Items> list = new SimpleLinkedList<Items>();
-    
-//read in the music file----------------------------------
+  //reads in items from txt
+  public static DoubleLinkedList<Items> readItems(){
+      DoubleLinkedList<Items> list = new DoubleLinkedList<Items>();
     try {
       File file = new File("Tasha.txt");
       Scanner fileInput = new Scanner(file);
@@ -63,14 +61,45 @@ public class Main {
     catch(Exception E){
       System.out.println("Error 1");
     }
+    return list;
+}
+  //returns the searched student
+  public Person checkStudent (int num, DoubleLinkedList<Person> students){
+    int index=0;
+    while (index < students.size()){
+      if (num==students.get(index).getNum()){
+        return students.get(index);
+      }
+      index++;
+    }
+    return null;
+  }
+  //returns the searched item
+    public static Items checkItem (String input, DoubleLinkedList<Items> list){
+      for (int i = 0; i<list.size(); i++){
+      if (input.equals(list.get(i).getName())){
+        return list.get(i);
+      }
+    }
+    return null;
+  }
+  
+  public static void main(String[] args) { 
     
-//------------------------------------------------------------------------
-    for (int i = 0; i< list.size(); i++){
+//read in the files----------------------------------
+DoubleLinkedList<Items> list = readItems();
+DoubleLinkedList<Person> students = readStudents();
+  for (int i = 0; i< list.size(); i++){
       Items temp = list.get(i);
       temp.display();
       System.out.println();
     }
-
+    
+     for (int i=0; i<students.size(); i++){
+       System.out.println (students.get(i).getNum());
+     }
+//------------------------------------------------------------------------
+  
     Scanner input = new Scanner(System.in);
     while (true){
       System.out.println("Press 1 to sign out, press 2 to sign in");
