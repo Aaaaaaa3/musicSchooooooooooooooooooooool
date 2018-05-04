@@ -1,8 +1,6 @@
 /**
  * Template for insturments, equipment and sheet music
  */
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Items {
   private boolean condition;
