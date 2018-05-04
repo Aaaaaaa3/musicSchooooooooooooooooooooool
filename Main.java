@@ -27,8 +27,8 @@ public class Main {
       }
     }
     catch(Exception e){
+      System.out.println("Error 2");
     }
-    System.out.println ("DONE");
     return students;
   }
   //reads in items from txt
