@@ -1,0 +1,4 @@
+Flute_1 true 1 "First flute
+Flute_2 false 2 "Out to repairs
+Trombone_1 true 1 "First trombone
+Tuba_1 true 1 "First tuba
