@@ -46,14 +46,14 @@ public class Main {
                                    stringInput.next());
         String tempTemp = stringInput.next();
         //if it has a student
-        if (tempTemp.charAt(0) != '"'){
+        if (tempTemp.charAt(0) != '*'){
           Person tempStu = new Person(tempTemp);
           tempItem.setPerson(tempStu);
           
           tempItem.setDate(stringInput.next());
         }
         //set description
-        tempItem.setDescr(temp.substring(temp.indexOf('"')+1));       
+        tempItem.setDescr(temp.substring(temp.indexOf('*')+1));       
         list.add(tempItem);
         
       }
