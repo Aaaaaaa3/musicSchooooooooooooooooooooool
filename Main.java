@@ -4,9 +4,7 @@
  * 
  * Finished: txt file read in & saved to list
  * 
- * Add in: proper due date
- * nullPointerException when you add in an invalid insturment
- * 
+ * Changed: turned sign in and sign out into seperate methods
  */
 import java.time.LocalDate;
 import java.text.SimpleDateFormat;
@@ -15,6 +13,60 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+  //signs in an item 
+  public static void signIn(DoubleLinkedList<Items> list){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What do you want to sign in?");
+    String temp = input.nextLine();
+    Items tempTemp = checkItem(temp, list);
+    //checks if item is found
+    if (tempTemp == null){
+      System.out.println("Not found.");
+    }
+    else {
+      tempTemp.setPerson(-1);
+      tempTemp.setDate(null);
+    }
+  }//end of sign in
+  //signs out an item
+  public static void signOut(DoubleLinkedList<Person> students, DoubleLinkedList<Items> list){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What do you want to sign out?");
+    String temp = input.nextLine();
+    Items tempTemp = checkItem(temp, list);
+    //checks if item is found
+    if (tempTemp == null){
+      System.out.println("Not found.");
+    }
+    else {
+      //checks if item is out on repairs
+      if (tempTemp.getCondition() == false){
+        System.out.println("This is currently out to repairs.");
+      }
+      else{
+        System.out.println("Enter your student id.");
+        temp = input.nextLine();
+        
+        //checks if item is already signed out by a different user
+        if (tempTemp.getPerson() != -1 && tempTemp.getPerson() != Integer.parseInt(temp)){
+          System.out.println("This is already signed out by someone else.");
+        }
+        else{
+          Person tempStu = checkStudent(Integer.parseInt(temp),students);
+          if (tempStu == null){
+            System.out.println("Student not found.");
+          }
+          else {
+            tempTemp.setPerson(tempStu.getNum());
+            //finds current date
+            String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            //increases day by 1
+            tempTemp.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
+          }
+        }
+      }
+    }
+  }//end of sign out
   
   //reads in students from txt
   public static DoubleLinkedList<Person> readStudents (){
@@ -106,55 +158,11 @@ public class Main {
       System.out.println("Press 1 to sign out, press 2 to sign in");
       String temp = input.nextLine();
       if (temp.equals("1")){
-        System.out.println("What do you want to sign out?");
-        temp = input.nextLine();
-        Items tempTemp = checkItem(temp, list);
-        //checks if item is found
-        if (tempTemp == null){
-          System.out.println("Not found.");
-        }
-        else {
-          //checks if item is out on repairs
-          if (tempTemp.getCondition() == false){
-            System.out.println("This is currently out to repairs.");
-          }
-          else{
-            System.out.println("Enter your student id.");
-            temp = input.nextLine();
-            
-            //checks if item is already signed out by a different user
-            if (tempTemp.getPerson() != -1 && tempTemp.getPerson() != Integer.parseInt(temp)){
-              System.out.println("This is already signed out by someone else.");
-            }
-            else{
-              Person tempStu = checkStudent(Integer.parseInt(temp),students);
-              if (tempStu == null){
-                System.out.println("Student not found.");
-              }
-              else {
-                tempTemp.setPerson(tempStu.getNum());
-                //finds current date
-                String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-                //increases day by 1
-                tempTemp.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
-              }
-            }
-          }
-        }
-      }//end of sign out
+        signOut(students, list);
+      }
       
       else if (temp.equals("2")){
-        System.out.println("What do you want to sign in?");
-        temp = input.nextLine();
-        Items tempTemp = checkItem(temp, list);
-        //checks if item is found
-        if (tempTemp == null){
-          System.out.println("Not found.");
-        }
-        else {
-          tempTemp.setPerson(-1);
-          tempTemp.setDate(null);
-        }
+        signIn(list);
       }
       //display
       for (int i = 0; i< list.size(); i++){
