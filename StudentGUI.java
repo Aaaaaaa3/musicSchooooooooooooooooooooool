@@ -28,7 +28,7 @@ public class StudentGUI extends JPanel{
   
   class signOutListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      SignOut.run();
+      new SignOut();
       frame.setVisible(false);
       frame.dispose();
     }

@@ -10,13 +10,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class SignOut extends JPanel{
+  JFrame frame = new JFrame ("Music Sign Out");
   public SignOut(){ //constructor
-    super(new GridLayout(1, 1));
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(400,300);
+    //super(new GridLayout(1, 1));
     JTabbedPane tabbedPane = new JTabbedPane();
     JPanel instrumentPanel = new JPanel();
     JPanel sheetPanel = new JPanel();
     JPanel equipmentPanel = new JPanel();
-    JPanel alertPanel = new JPanel();
     
     JTextField studentNum1 = new JTextField("Student number");
     JTextField studentNum2 = new JTextField("Student number");
@@ -24,7 +26,6 @@ public class SignOut extends JPanel{
     JTextField instrument = new JTextField("Instrument");
     JTextField sheetMusic = new JTextField ("Sheet Music");
     JTextField equipment = new JTextField ("Equipment");
-    JLabel alerts = new JLabel ("OVERDUE");
     
     JCheckBox condition1 = new JCheckBox("Good condition?");
     JCheckBox condition2 = new JCheckBox("Good condition?");
@@ -48,22 +49,16 @@ public class SignOut extends JPanel{
     equipmentPanel.add(condition3);
     equipmentPanel.add(signOut3);
     
-    alertPanel.add(alerts);
-    
     tabbedPane.addTab("Instrument", instrumentPanel);
     tabbedPane.addTab("Sheet Music", sheetPanel);
     tabbedPane.addTab("Equipment", equipmentPanel);
-    tabbedPane.addTab("Overdue", alertPanel);
     
-    add(tabbedPane); 
+    frame.add(tabbedPane); 
+    frame.setVisible(true);
   }
   
-  public static void run(){
-    JFrame frame = new JFrame ("Music Sign Out");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new SignOut(), BorderLayout.CENTER);
-    frame.setSize(400,300);
-    frame.setVisible(true);
+  public static void main(String [] args){
+    new SignOut();
   }
   
 }
