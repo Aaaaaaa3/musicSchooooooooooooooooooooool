@@ -13,6 +13,28 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+  //saves the io file
+    public static void printFile(DoubleLinkedList<Items> array){
+    try{
+      PrintWriter printOut = new PrintWriter ("Tasha.txt");
+      for (int i=0; i<array.size(); i++){
+        printOut.print(array.get(i).getName()+" ");
+        printOut.print(array.get(i).getCondition() + " ");
+        printOut.print(array.get(i).getNum() + " ");
+        if (array.get(i).getPerson()!= -1){
+          printOut.print(array.get(i).getPerson() + " ");
+          printOut.print(array.get(i).getDate() + " ");
+        }
+        printOut.print("*" + array.get(i).getDescr());
+        printOut.println();
+      }
+      printOut.close();
+    }
+    catch (Exception e){
+      System.out.println ("Error 3");
+    }
+  }
+  
   //signs in an item 
   public static void signIn(DoubleLinkedList<Items> list){
     Scanner input = new Scanner(System.in);
@@ -154,8 +176,9 @@ public class Main {
 //------------------------------------------------------------------------
     
     Scanner input = new Scanner(System.in);
-    while (true){
-      System.out.println("Press 1 to sign out, press 2 to sign in, 3 if you want to see recent sign outs");
+    boolean exit = false;
+    while (exit == false){
+      System.out.println("Press 1 to sign out, press 2 to sign in, 3 if you want to see recent sign outs, and 4 to exit.");
       String temp = input.nextLine();
       if (temp.equals("1")){
         signOut(students, list);
@@ -188,6 +211,11 @@ public class Main {
           temp = input.nextLine();
           //same thing, but in the for loop there's an if statement that only prints if it's that student
       }
+      }
+      else if (temp.equals("4")){
+        printFile(list);
+        System.out.println("Thank you!");
+        exit = true;
       }
       
     }
