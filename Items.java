@@ -9,7 +9,7 @@ public class Items {
   private String num;
   
   private int stu = -1;
-  private String dueDate = "2019-01-01";//change into appropriate thing later
+  private String dueDate = "";//change into appropriate thing later
   
   /********************************************************* the constructors ***********************************************/
   //default constructor
@@ -22,18 +22,48 @@ public class Items {
     this.num = num;
   }
   
-  public void display(){
-    
-    System.out.println("Name: " + this.name);
-    System.out.println("Num: " + this.num);
-    System.out.println("Condition: " + this.condition);
-    System.out.println("Description: "+ this.descr);
-    if(this.stu != -1){
-      System.out.println("Student: " + this.stu);
+  //a = mode
+  public void display(int a){
+    //displays all items
+    if (a == 0){
+      System.out.println("Name: " + this.name);
+      System.out.println("Num: " + this.num);
+      System.out.println("Condition: " + this.condition);
+      System.out.println("Description: "+ this.descr);
+      if(this.stu != -1){
+        System.out.println("Student: " + this.stu);
 //      Date date = new Date();
 //      System.out.println("Due date: " + this.dueDate.format(date));
-      System.out.println("Due date: " + this.dueDate);
+        System.out.println("Due date: " + this.dueDate);
+      }
     }
+    //doesn't display an item if it isn't signed out by a student
+    else if (a == 1){
+      if (dueDate.equals("") == false){
+        System.out.println("Name: " + this.name);
+        System.out.println("Num: " + this.num);
+        System.out.println("Condition: " + this.condition);
+        System.out.println("Description: "+ this.descr);
+        if(this.stu != -1){
+          System.out.println("Student: " + this.stu);
+          System.out.println("Due date: " + this.dueDate);
+        }
+      }
+    }
+    //doesn't display an item if it isn't signed out by a SPECIFIC student
+    else{
+      if (a == this.stu){
+        System.out.println("Name: " + this.name);
+        System.out.println("Num: " + this.num);
+        System.out.println("Condition: " + this.condition);
+        System.out.println("Description: "+ this.descr);
+        if(this.stu != -1){
+          System.out.println("Student: " + this.stu);
+          System.out.println("Due date: " + this.dueDate);
+        }
+      }
+    }
+  }
     
   }
   /********************************************************* the get methods ***********************************************/
