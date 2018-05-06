@@ -10,8 +10,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TeacherGUI extends JPanel{
+  JFrame frame = new JFrame ("Music Sign Out");
   public TeacherGUI(DoubleLinkedList<Items> items){
-    super(new GridLayout(1, 1));
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(400,300);
+    //super(new GridLayout(1, 1));
     JTabbedPane tabbedPane = new JTabbedPane();
     JPanel panel = new JPanel();
     JLabel[] label=new JLabel[items.size()];
@@ -22,14 +25,11 @@ public class TeacherGUI extends JPanel{
     } 
     tabbedPane.addTab("Items by Due Date", panel);
     
-    add(tabbedPane); 
+    frame.add(tabbedPane); 
+    frame.setVisible(true);
   }
   
   public static void run (DoubleLinkedList<Items> items){
-    JFrame frame = new JFrame ("Music Sign Out");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new TeacherGUI(items), BorderLayout.CENTER);
-    frame.setSize(400,300);
-    frame.setVisible(true);
+    new TeacherGUI(items);
   }
 }
