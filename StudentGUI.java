@@ -1,68 +1,52 @@
-/* StudentGUI.java
- * Julia Zhao and Tasha Xiao
- * May 02 2018 
- * Version 1.0.0
- * GUI program for the student
- */
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class StudentGUI extends JPanel{
-  public StudentGUI(){ //constructor
-    super(new GridLayout(1, 1));
-    JTabbedPane tabbedPane = new JTabbedPane();
-    JPanel instrumentPanel = new JPanel();
-    JPanel sheetPanel = new JPanel();
-    JPanel equipmentPanel = new JPanel();
-    JPanel alertPanel = new JPanel();
+  JFrame frame = new JFrame ("Music Sign Out");
+  public StudentGUI(){
+    frame.setSize(400,300);
     
-    JTextField studentNum1 = new JTextField("Student number");
-    JTextField studentNum2 = new JTextField("Student number");
-    JTextField studentNum3 = new JTextField("Student number");
-    JTextField instrument = new JTextField("Instrument");
-    JTextField sheetMusic = new JTextField ("Sheet Music");
-    JTextField equipment = new JTextField ("Equipment");
-    JLabel alerts = new JLabel ("OVERDUE");
+    JPanel panel = new JPanel();
+    JLabel question = new JLabel ("What would you like to do?");
+    JButton signOut = new JButton ("Sign Out");
+    JButton signIn = new JButton ("Sign In");
+    JButton recent = new JButton ("View recent actions");
     
-    JCheckBox condition1 = new JCheckBox("Good condition?");
-    JCheckBox condition2 = new JCheckBox("Good condition?");
-    JCheckBox condition3 = new JCheckBox("Good condition?");
-    JButton signOut1 = new JButton ("Sign Out");
-    JButton signOut2 = new JButton ("Sign Out");
-    JButton signOut3 = new JButton ("Sign Out");
+    signOut.addActionListener(new signOutListener());
+    signIn.addActionListener (new signInListener());
+    recent.addActionListener(new recentListener());
     
-    instrumentPanel.add(studentNum1);
-    instrumentPanel.add(instrument);
-    instrumentPanel.add(condition1);
-    instrumentPanel.add(signOut1);
+    panel.add(question);
+    panel.add(signOut);
+    panel.add(signIn);
+    panel.add(recent);
     
-    sheetPanel.add(studentNum2);
-    sheetPanel.add(sheetMusic);
-    sheetPanel.add(condition2);
-    sheetPanel.add(signOut2);
-    
-    equipmentPanel.add(studentNum3);
-    equipmentPanel.add(equipment);
-    equipmentPanel.add(condition3);
-    equipmentPanel.add(signOut3);
-    
-    alertPanel.add(alerts);
-    
-    tabbedPane.addTab("Instrument", instrumentPanel);
-    tabbedPane.addTab("Sheet Music", sheetPanel);
-    tabbedPane.addTab("Equipment", equipmentPanel);
-    tabbedPane.addTab("Overdue", alertPanel);
-    
-    add(tabbedPane); 
+    frame.add(panel);
+    frame.setVisible (true);
   }
   
-  public static void run(){
-    JFrame frame = new JFrame ("Music Sign Out");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new StudentGUI(), BorderLayout.CENTER);
-    frame.setSize(400,300);
-    frame.setVisible(true);
+  class signOutListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      SignOut.run();
+      frame.setVisible(false);
+      frame.dispose();
+    }
+  }
+  
+  class signInListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      new SignIn();
+      frame.setVisible(false);
+      frame.dispose();
+    }
+  }
+  
+  class recentListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      new Recent();
+      frame.setVisible(false);
+      frame.dispose();
+    }
   }
 }

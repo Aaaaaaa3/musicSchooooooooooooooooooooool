@@ -25,10 +25,10 @@ public class TeacherGUI extends JPanel{
     add(tabbedPane); 
   }
   
-  public static void main (String [] args){
+  public static void run (DoubleLinkedList<Items> items){
     JFrame frame = new JFrame ("Music Sign Out");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new TeacherGUI(), BorderLayout.CENTER);
+    frame.add(new TeacherGUI(items), BorderLayout.CENTER);
     frame.setSize(400,300);
     frame.setVisible(true);
   }
