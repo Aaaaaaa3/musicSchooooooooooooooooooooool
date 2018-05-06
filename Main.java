@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class Main {
   //saves the io file
-    public static void printFile(DoubleLinkedList<Items> array){
+  public static void printFile(DoubleLinkedList<Items> array){
     try{
       PrintWriter printOut = new PrintWriter ("Tasha.txt");
       for (int i=0; i<array.size(); i++){
@@ -166,7 +166,7 @@ public class Main {
     DoubleLinkedList<Person> students = readStudents();
     for (int i = 0; i< list.size(); i++){
       Items temp = list.get(i);
-      temp.display();
+      temp.display(0);
       System.out.println();
     }
     
@@ -183,34 +183,53 @@ public class Main {
       if (temp.equals("1")){
         signOut(students, list);
         //display
-        System.out.println("Updated!:");
         for (int i = 0; i< list.size(); i++){
           Items temp3 = list.get(i);
-          temp3.display();
+          temp3.display(0);
           System.out.println();
         }
       }
       else if (temp.equals("2")){
         signIn(list);
         //display
-        System.out.println("Updated!:");
         for (int i = 0; i< list.size(); i++){
           Items temp3 = list.get(i);
-          temp3.display();
+          temp3.display(0);
           System.out.println();
         }
       }
       else if (temp.equals("3")){
+        //sort the list
+        DoubleLinkedList.sortChrono(list);
+        
         System.out.println("Press 1 if you want to see general, 2 if you want to see for a specific student:");
         temp = input.nextLine();
         if (temp.equals("1")){
+          for (int i = 0; i< list.size(); i++){
+            Items temp3 = list.get(i);
+            temp3.display(1);
+            System.out.println();
+          }
           //sorts and displays list
-      }
+        }
         else if (temp.equals("2")){
           System.out.println("Which student do you want to see?");
           temp = input.nextLine();
+          for (int i = 0; i< list.size(); i++){
+            Items temp3 = list.get(i);
+            temp3.display(Integer.parseInt(temp));
+            System.out.println();
+          }
           //same thing, but in the for loop there's an if statement that only prints if it's that student
-      }
+        }
+        
+        //change sorting back into alphabetically
+        DoubleLinkedList.sortAlpha(list);
+            for (int i = 0; i< list.size(); i++){
+            Items temp3 = list.get(i);
+            temp3.display(0);
+            System.out.println();
+          }
       }
       else if (temp.equals("4")){
         printFile(list);
