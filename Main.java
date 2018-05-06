@@ -13,6 +13,28 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+  //saves the io file
+  public static void printFile(DoubleLinkedList<Items> array){
+    try{
+      PrintWriter printOut = new PrintWriter ("Tasha.txt");
+      for (int i=0; i<array.size(); i++){
+        printOut.print(array.get(i).getName()+" ");
+        printOut.print(array.get(i).getCondition() + " ");
+        printOut.print(array.get(i).getNum() + " ");
+        if (array.get(i).getPerson()!= -1){
+          printOut.print(array.get(i).getPerson() + " ");
+          printOut.print(array.get(i).getDate() + " ");
+        }
+        printOut.print("*" + array.get(i).getDescr());
+        printOut.println();
+      }
+      printOut.close();
+    }
+    catch (Exception e){
+      System.out.println ("Error 3");
+    }
+  }
+  
   //signs in an item 
   public static void signIn(DoubleLinkedList<Items> list){
     Scanner input = new Scanner(System.in);
@@ -89,7 +111,7 @@ public class Main {
   public static DoubleLinkedList<Items> readItems(){
     DoubleLinkedList<Items> list = new DoubleLinkedList<Items>();
     try {
-      File file = new File("instruments.txt");
+      File file = new File("Tasha.txt");
       Scanner fileInput = new Scanner(file);
       
       while (fileInput.hasNext()){
@@ -144,7 +166,7 @@ public class Main {
     DoubleLinkedList<Person> students = readStudents();
     for (int i = 0; i< list.size(); i++){
       Items temp = list.get(i);
-      temp.display();
+      temp.display(0);
       System.out.println();
     }
     
@@ -154,64 +176,75 @@ public class Main {
 //------------------------------------------------------------------------
     
     Scanner input = new Scanner(System.in);
-    while (true){
-          
-    //alerts
-    //convert today's date to String
-    String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-    System.out.println ("Today's date:" + currentDate);
-    //sort through list of sign outs based on date
-    list.sortChrono (list);
-    //display the items that arent due yet
-    int j=0;
-    while (j<list.size() && list.get(j).getDate().compareTo(currentDate)>=0){
-      System.out.println (list.get(j).getName());
-      System.out.println (list.get(j).getDate());
-      j++;
-    }
-    System.out.println ("OVERDUE:");
-    while (j<list.size()){
-      System.out.println (list.get(j).getName());
-      System.out.println (list.get(j).getDate());
-      j++;
-    }
-    
-      System.out.println("Press 1 to sign out, press 2 to sign in, 3 if you want to see recent sign outs");
+    boolean exit = false;
+    while (exit == false){
+      System.out.println("Press 1 to sign out, press 2 to sign in, 3 if you want to see recent sign outs, and 4 to exit.");
       String temp = input.nextLine();
       if (temp.equals("1")){
         signOut(students, list);
         //display
-        System.out.println("Updated!:");
         for (int i = 0; i< list.size(); i++){
           Items temp3 = list.get(i);
-          temp3.display();
+          temp3.display(0);
           System.out.println();
         }
       }
       else if (temp.equals("2")){
         signIn(list);
         //display
-        System.out.println("Updated!:");
         for (int i = 0; i< list.size(); i++){
           Items temp3 = list.get(i);
-          temp3.display();
+          temp3.display(0);
           System.out.println();
         }
       }
       else if (temp.equals("3")){
+        //sort the list
+        DoubleLinkedList.sortChrono(list);
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+        System.out.println ("Today's date: " + currentDate);
+        
         System.out.println("Press 1 if you want to see general, 2 if you want to see for a specific student:");
         temp = input.nextLine();
+        
+        
         if (temp.equals("1")){
-          //sorts and displays list
-      }
+          int j = 0;
+          while (j<list.size() && list.get(j).getDate().compareTo(currentDate)>=0){
+            list.get(j).display(1);
+            j++;
+          }
+          System.out.println ("\nOVERDUE:\n");
+          while (j<list.size() && list.get(j).getPerson() != -1){
+            list.get(j).display(1);
+            j++;
+          }
+          
+        }
         else if (temp.equals("2")){
           System.out.println("Which student do you want to see?");
           temp = input.nextLine();
-          //same thing, but in the for loop there's an if statement that only prints if it's that student
+          int j = 0;
+          while (j<list.size() && list.get(j).getDate().compareTo(currentDate)>=0){
+            list.get(j).display(Integer.parseInt(temp));
+            j++;
+          }
+          System.out.println ("\nOVERDUE:\n");
+          while (j<list.size() && list.get(j).getPerson() != -1){
+            list.get(j).display(Integer.parseInt(temp));
+            j++;
+          }
+        }
+        
+        DoubleLinkedList.sortAlpha(list);
       }
+      else if (temp.equals("4")){
+        printFile(list);
+        System.out.println("Thank you!");
+        exit = true;
       }
+      
     }
-    
   }
   
 }
