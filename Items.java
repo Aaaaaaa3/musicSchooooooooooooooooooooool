@@ -8,7 +8,7 @@ public class Items {
   private String descr = "";
   private String num;
   
-  private Person stu;
+  private int stu = -1;
   private String dueDate;//change into appropriate thing later
   
   /********************************************************* the constructors ***********************************************/
@@ -28,8 +28,8 @@ public class Items {
     System.out.println("Num: " + this.num);
     System.out.println("Condition: " + this.condition);
     System.out.println("Description: "+ this.descr);
-    if(this.stu != null){
-      System.out.println("Student: " + this.stu.getName());
+    if(this.stu != -1){
+      System.out.println("Student: " + this.stu);
 //      Date date = new Date();
 //      System.out.println("Due date: " + this.dueDate.format(date));
       System.out.println("Due date: " + this.dueDate);
@@ -53,7 +53,7 @@ public class Items {
     return this.num;
   }
   
-  public Person getPerson(){
+  public int getPerson(){
     return this.stu;
   }
   
@@ -62,7 +62,7 @@ public class Items {
   }
   /********************************************************* the set methods ***********************************************/
   
-  public void setPerson(Person student){
+  public void setPerson(int student){
     this.stu = student;
   }
   
