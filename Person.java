@@ -11,8 +11,8 @@ public class Person {
     this.name = name;
     this.personNum = num;
   }
-  public Person(String name) {
-    this.name = name;
+    public Person(String num) {
+    this.personNum = Integer.parseInt(num);
   }
   
   public String getName(){
