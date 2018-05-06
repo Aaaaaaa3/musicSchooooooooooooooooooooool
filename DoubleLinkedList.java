@@ -91,31 +91,33 @@ class DoubleLinkedList<E> {
   }
   
   //insertion
-  public void sortAlpha(DoubleLinkedList<String> a){
+  public static void sortAlpha(DoubleLinkedList<Items> a){
     for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
-      String item = a.get(i); //pivot element
+      Items tempItem = a.get(i);
+      String item = tempItem.getName(); //pivot element
       
-      while (index>=0 && a.get(index).compareTo(item)>0){
+      while (index>=0 && ((a.get(index)).getName()).compareTo(item)>0){
         a.set(index+1, a.get(index)); //move the element one position down
         index--;
       }
       
-      a.set(index+1,item); //insert item in proper position
+      a.set(index+1,tempItem); //insert item in proper position
     }
   }
   
-  public void sortChrono(DoubleLinkedList<String> a){
+  public static void sortChrono(DoubleLinkedList<Items> a){
     for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
-      String item = a.get(i); //pivot element
+      Items tempItem = a.get(i); //pivot element
+      String item = tempItem.getDate();
       
-      while (index>=0 && a.get(index).compareTo(item)<0){
+      while (index>=0 && ((a.get(index)).getDate()).compareTo(item)<0){
         a.set(index+1, a.get(index)); //move the element one position down
         index--;
       }
       
-      a.set(index+1,item); //insert item in proper position
+      a.set(index+1,tempItem); //insert item in proper position
     }
   }
 }
