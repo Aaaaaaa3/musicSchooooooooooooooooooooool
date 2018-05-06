@@ -155,21 +155,41 @@ public class Main {
     
     Scanner input = new Scanner(System.in);
     while (true){
-      System.out.println("Press 1 to sign out, press 2 to sign in");
+      System.out.println("Press 1 to sign out, press 2 to sign in, 3 if you want to see recent sign outs");
       String temp = input.nextLine();
       if (temp.equals("1")){
         signOut(students, list);
+        //display
+        System.out.println("Updated!:");
+        for (int i = 0; i< list.size(); i++){
+          Items temp3 = list.get(i);
+          temp3.display();
+          System.out.println();
+        }
       }
-      
       else if (temp.equals("2")){
         signIn(list);
+        //display
+        System.out.println("Updated!:");
+        for (int i = 0; i< list.size(); i++){
+          Items temp3 = list.get(i);
+          temp3.display();
+          System.out.println();
+        }
       }
-      //display
-      for (int i = 0; i< list.size(); i++){
-        Items temp3 = list.get(i);
-        temp3.display();
-        System.out.println();
+      else if (temp.equals("3")){
+        System.out.println("Press 1 if you want to see general, 2 if you want to see for a specific student:");
+        temp = input.nextLine();
+        if (temp.equals("1")){
+          //sorts and displays list
       }
+        else if (temp.equals("2")){
+          System.out.println("Which student do you want to see?");
+          temp = input.nextLine();
+          //same thing, but in the for loop there's an if statement that only prints if it's that student
+      }
+      }
+      
     }
   }
   
