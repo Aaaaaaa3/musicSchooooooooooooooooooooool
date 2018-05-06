@@ -64,8 +64,6 @@ public class Items {
       }
     }
   }
-    
-  }
   /********************************************************* the get methods ***********************************************/
   public boolean getCondition(){
     return this.condition;
