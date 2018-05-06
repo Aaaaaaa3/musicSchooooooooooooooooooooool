@@ -16,16 +16,16 @@ public class StudentGUI extends JPanel{
     JPanel instrumentPanel = new JPanel();
     JPanel sheetPanel = new JPanel();
     JPanel equipmentPanel = new JPanel();
+    JPanel alertPanel = new JPanel();
     
-    JTextField firstName1 = new JTextField("First name");
-    JTextField lastName1 = new JTextField("Last name");
-    JTextField firstName2 = new JTextField("First name");
-    JTextField lastName2 = new JTextField("Last name");
-    JTextField firstName3 = new JTextField("First name");
-    JTextField lastName3 = new JTextField("Last name");
+    JTextField studentNum1 = new JTextField("Student number");
+    JTextField studentNum2 = new JTextField("Student number");
+    JTextField studentNum3 = new JTextField("Student number");
     JTextField instrument = new JTextField("Instrument");
     JTextField sheetMusic = new JTextField ("Sheet Music");
     JTextField equipment = new JTextField ("Equipment");
+    JLabel alerts = new JLabel ("OVERDUE");
+    
     JCheckBox condition1 = new JCheckBox("Good condition?");
     JCheckBox condition2 = new JCheckBox("Good condition?");
     JCheckBox condition3 = new JCheckBox("Good condition?");
@@ -33,27 +33,27 @@ public class StudentGUI extends JPanel{
     JButton signOut2 = new JButton ("Sign Out");
     JButton signOut3 = new JButton ("Sign Out");
     
-    instrumentPanel.add(firstName1);
-    instrumentPanel.add(lastName1);
+    instrumentPanel.add(studentNum1);
     instrumentPanel.add(instrument);
     instrumentPanel.add(condition1);
     instrumentPanel.add(signOut1);
     
-    sheetPanel.add(firstName2);
-    sheetPanel.add(lastName2);
+    sheetPanel.add(studentNum2);
     sheetPanel.add(sheetMusic);
     sheetPanel.add(condition2);
     sheetPanel.add(signOut2);
     
-    equipmentPanel.add(firstName3);
-    equipmentPanel.add(lastName3);
+    equipmentPanel.add(studentNum3);
     equipmentPanel.add(equipment);
     equipmentPanel.add(condition3);
     equipmentPanel.add(signOut3);
     
+    alertPanel.add(alerts);
+    
     tabbedPane.addTab("Instrument", instrumentPanel);
     tabbedPane.addTab("Sheet Music", sheetPanel);
     tabbedPane.addTab("Equipment", equipmentPanel);
+    tabbedPane.addTab("Overdue", alertPanel);
     
     add(tabbedPane); 
   }
