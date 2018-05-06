@@ -12,7 +12,6 @@ import javax.swing.*;
 public class MenuGUI extends JPanel implements ActionListener{
   JButton teacher = new JButton ("Teacher");
   JButton student = new JButton ("Student");
-  JButton lol = new JButton ("An idiot sandwich");
   JButton quit = new JButton ("QUIT");
   
   public MenuGUI(){
@@ -26,7 +25,6 @@ public class MenuGUI extends JPanel implements ActionListener{
     panel.add(label);
     panel.add(teacher);
     panel.add(student);
-    panel.add(lol);
     panel.add(quit);
     add(panel);
   }
@@ -36,10 +34,13 @@ public class MenuGUI extends JPanel implements ActionListener{
       StudentGUI.run();
     }
     else if(e.getSource()==teacher){
+     // TeacherGUI.run();
     }
     else {//clicked "QUIT"
       System.exit(0);
     }
+    this.setVisible(false);
+    ((JFrame)SwingUtilities.getWindowAncestor(this)).dispose();
   }
   
   public static void main(String [] args){
