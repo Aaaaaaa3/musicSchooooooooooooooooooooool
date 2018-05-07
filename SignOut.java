@@ -18,8 +18,14 @@ public class SignOut extends JPanel{
   JTextField studentNum2 = new JTextField("Student number");
   JTextField studentNum3 = new JTextField("Student number");
   JTextField instrument = new JTextField("Instrument");
+  JTextField instrNum = new JTextField("Instrument Number");
   JTextField sheetMusic = new JTextField ("Sheet Music");
+  JTextField sheetNum = new JTextField("Sheet Number");
   JTextField equipment = new JTextField ("Equipment");
+  JTextField equipNum = new JTextField("Equipment Number");
+  JCheckBox condition1 = new JCheckBox("Good condition?");
+  JCheckBox condition2 = new JCheckBox("Good condition?");
+  JCheckBox condition3 = new JCheckBox("Good condition?");
   
   public SignOut(){ //constructor
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,28 +42,32 @@ public class SignOut extends JPanel{
     JPanel sheetPanel = new JPanel();
     JPanel equipmentPanel = new JPanel();
     
-    
-    JCheckBox condition1 = new JCheckBox("Good condition?");
-    JCheckBox condition2 = new JCheckBox("Good condition?");
-    JCheckBox condition3 = new JCheckBox("Good condition?");
     JButton signOut1 = new JButton ("Sign Out");
     JButton signOut2 = new JButton ("Sign Out");
     JButton signOut3 = new JButton ("Sign Out");
     
-    signOut1.addActionListener(new Listener1());
+    JButton add1 = new JButton ("Add Entry");
+    JButton add2 = new JButton ("Add Entry");
+    JButton add3 = new JButton ("Add Entry");
+    
+    signOut1.addActionListener(new SignOutListener1());
+    add1.addActionListener (new AddListener1());
     
     instrumentPanel.add(studentNum1);
     instrumentPanel.add(instrument);
+    instrumentPanel.add(instrNum);
     instrumentPanel.add(condition1);
     instrumentPanel.add(signOut1);
     
     sheetPanel.add(studentNum2);
     sheetPanel.add(sheetMusic);
+    sheetPanel.add(sheetNum);
     sheetPanel.add(condition2);
     sheetPanel.add(signOut2);
     
     equipmentPanel.add(studentNum3);
     equipmentPanel.add(equipment);
+    equipmentPanel.add(equipNum);
     equipmentPanel.add(condition3);
     equipmentPanel.add(signOut3);
     
@@ -69,7 +79,7 @@ public class SignOut extends JPanel{
     frame.setVisible(true);
   }
   
-  class Listener1 implements ActionListener{
+  class SignOutListener1 implements ActionListener{
     public void actionPerformed(ActionEvent event){
       //get the information from the field
       String name = instrument.getText();
@@ -112,7 +122,30 @@ public class SignOut extends JPanel{
       }
     }
   }
- 
+  
+  class AddListener1 implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      //make sure the instrument is not already in the system     
+      String name = instrument.getText();
+      //check if item is found
+      Items item = MusicResource.checkItem(name, MusicResource.getItems());
+      if (item==null){
+        Items newItem = new Items();
+        newItem.setName(name);
+        newItem.setCondition(condition1.isSelected());
+        if (condition1.isSelected()==false){
+          newItem.setDescr("*Out to repairs");
+        }
+        
+        MusicResource.getItems().add(newItem); //add new item into database
+      }
+      
+      else{
+        MenuGUI.createPopUp("Item is already found in database! Can't add.");
+      }
+    }
+  }
+  
   public static void main(String [] args){
     new SignOut();
   }
