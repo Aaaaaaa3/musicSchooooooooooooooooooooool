@@ -1,4 +1,14 @@
 //add, delete, edit, search, previous/next
+//won't delete tuba 1? dont know why
+
+//previous/next done
+//search done
+
+//IN PROGRESS:
+//add 
+//delete
+//edit
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,6 +18,7 @@ public class Inventory extends JPanel{
   int index=0;
   JLabel[] info = new JLabel[6];
   JButton delete = new JButton ("Delete item"); //delete the item that the user is on right now
+  JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
   public Inventory (){
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,19 +36,23 @@ public class Inventory extends JPanel{
     JButton add = new JButton ("Add item");
     JButton edit = new JButton ("Edit");
     JButton searchButton = new JButton ("Search");
-    JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
     
     back.addActionListener(new BackListener());
     next.addActionListener(new NextListener());
     add.addActionListener(new AddListener());
     delete.addActionListener(new DeleteListener());
+    searchButton.addActionListener(new SearchListener());
     
     for (int i=0; i<6; i++){
       info[i]=new JLabel();
     }
     
+    if (MusicResource.getItems()!=null){
     setInfo(info, index);
-    
+    }
+    else{
+      MenuGUI.createPopUp("No items!");
+    }
     for (int i=0; i<6; i++){
       panel.add(info[i]);
     }
@@ -70,8 +85,8 @@ public class Inventory extends JPanel{
       info[5].setText("No due date");
     }
     else{
-      info[4] = new JLabel(Integer.toString(MusicResource.getItems().get(i).getPerson()));
-      info[5] = new JLabel(MusicResource.getItems().get(i).getDate());
+      info[4] = new JLabel("Signed out by: " + Integer.toString(MusicResource.getItems().get(i).getPerson()));
+      info[5] = new JLabel("Due date: " + MusicResource.getItems().get(i).getDate());
     }
   }
   
@@ -165,24 +180,19 @@ public class Inventory extends JPanel{
   
   class EditListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      if (index>0){
-        index=index-1;
-        setInfo(info, index);
-      }
-      else{
-        MenuGUI.createPopUp("No more items!");
-      }
+///do action
     }
   }
   
+  //search then display
   class SearchListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      if (index>0){
-        index=index-1;
-        setInfo(info, index);
+      index=search (MusicResource.getItems(), 0, MusicResource.getItems().size(), searchField.getText());
+      if (index>=0){
+      setInfo(info,index);
       }
       else{
-        MenuGUI.createPopUp("No more items!");
+        MenuGUI.createPopUp("Item not found!");
       }
     }
   }
