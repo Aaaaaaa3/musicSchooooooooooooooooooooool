@@ -1,3 +1,9 @@
+/* SignIn.java
+ * Julia Zhao and Tasha Xiao
+ * May 06 2018
+ * Version 1.0.0
+ * The GUI interface for a student who wants to sign an object in
+ */
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,7 +12,7 @@ public class SignIn {
   JFrame frame = new JFrame("Music Sign Out");
   JTextField question = new JTextField ("What would you like to sign in?");
   
-  public SignIn(){
+  public SignIn(){ //constructor
     frame.setSize (400,300);
     //Print to file once the window is closed
     frame.addWindowListener(new WindowAdapter(){
@@ -28,7 +34,7 @@ public class SignIn {
     frame.add(panel);
     frame.setVisible (true);
   }
-  
+ 
   class OkListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
       String name = question.getText();
