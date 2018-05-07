@@ -10,12 +10,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MenuGUI extends JPanel implements ActionListener{
+  JFrame frame = new JFrame ("Music Sign Out");
   JButton teacher = new JButton ("Teacher");
   JButton student = new JButton ("Student");
   JButton inventory = new JButton ("Inventory");
   JButton quit = new JButton ("QUIT");
   
   public MenuGUI(){
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(400,300);
     JPanel panel = new JPanel (new FlowLayout ());
     JLabel label = new JLabel ("What would you like to do?");
     
@@ -29,7 +32,21 @@ public class MenuGUI extends JPanel implements ActionListener{
     panel.add(student);
     panel.add(inventory);
     panel.add(quit);
-    add(panel);
+    frame.add(panel);
+    
+    frame.setVisible(true);
+  }
+  
+  public static void createPopUp(String msg){
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    JLabel label = new JLabel (msg);
+    
+    panel.add(label);
+    frame.add(panel);
+    
+    frame.setSize(400, 100);
+    frame.setVisible(true);
   }
   
   public void actionPerformed(ActionEvent e){
@@ -40,19 +57,16 @@ public class MenuGUI extends JPanel implements ActionListener{
      //TeacherGUI.run(items);
     }
     else {//clicked "QUIT"
+      MusicResource.printFile(MusicResource.getItems());
+      //thank you
       System.exit(0);
     }
     this.setVisible(false);
-    ((JFrame)SwingUtilities.getWindowAncestor(this)).dispose();
+    frame.dispose();
   }
   
-  public static void run(){
-    JFrame frame = new JFrame ("Music Sign Out");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new MenuGUI(), BorderLayout.CENTER);
-    frame.setSize(400,300);
-    frame.setVisible(true);
-    
+  public static void main(String[]args){
+    new MenuGUI();
   }
   
 }
