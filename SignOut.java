@@ -24,6 +24,12 @@ public class SignOut extends JPanel{
   public SignOut(){ //constructor
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(400,300);
+    //Print to file once the window is closed
+    frame.addWindowListener(new WindowAdapter(){
+      public void windowClosing(java.awt.event.WindowEvent windowEvent){
+        MusicResource.printFile(MusicResource.getItems());
+      }
+    });
     //super(new GridLayout(1, 1));
     JTabbedPane tabbedPane = new JTabbedPane();
     JPanel instrumentPanel = new JPanel();
@@ -78,23 +84,29 @@ public class SignOut extends JPanel{
           MenuGUI.createPopUp("Out to repairs. Cannot be signed out.");
         }
         else{
-          String idNumber = studentNum1.getText();
-          //check if item is already signed out by a different user
-          if (item.getPerson() !=-1 && item.getPerson()!=Integer.parseInt(idNumber)){
-            MenuGUI.createPopUp("Already signed out by someone else!");
-          }
-          else{
-            Person student = MusicResource.checkStudent(Integer.parseInt(idNumber), MusicResource.getStudents());
-            if (student==null){
-              MenuGUI.createPopUp("Sorry, your student number isn't in the database!");
+          try{
+            String idNumber = studentNum1.getText();
+            //check if item is already signed out by a different user
+            if (item.getPerson() !=-1 && item.getPerson()!=Integer.parseInt(idNumber)){
+              MenuGUI.createPopUp("Already signed out by someone else!");
             }
             else{
-              item.setPerson(student.getNum());
-              //finds current date
-              String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-              //increases day by 1
-              item.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
+              Person student = MusicResource.checkStudent(Integer.parseInt(idNumber), MusicResource.getStudents());
+              if (student==null){
+                MenuGUI.createPopUp("Sorry, your student number isn't in the database!");
+              }
+              else{
+                item.setPerson(student.getNum());
+                //finds current date
+                String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+                //increases day by 1
+                item.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
+                MenuGUI.createPopUp("Successfully signed out!");
+              }
             }
+          }
+          catch (Exception e){
+            MenuGUI.createPopUp("Please make sure the student number only has numbers!");
           }
         }
       }
@@ -104,5 +116,4 @@ public class SignOut extends JPanel{
   public static void main(String [] args){
     new SignOut();
   }
-  
 }
