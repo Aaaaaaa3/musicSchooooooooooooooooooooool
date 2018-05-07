@@ -16,7 +16,7 @@ import javax.swing.*;
 public class Inventory extends JPanel{
   JFrame frame = new JFrame ("Music Sign Out");
   int index=0;
-  JLabel[] info = new JLabel[6];
+  JTextField[] info = new JTextField[6];
   JButton delete = new JButton ("Delete item"); //delete the item that the user is on right now
   JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
@@ -44,7 +44,7 @@ public class Inventory extends JPanel{
     searchButton.addActionListener(new SearchListener());
     
     for (int i=0; i<6; i++){
-      info[i]=new JLabel();
+      info[i]=new JTextField();
     }
     
     if (MusicResource.getItems()!=null){
@@ -85,8 +85,8 @@ public class Inventory extends JPanel{
       info[5].setText("No due date");
     }
     else{
-      info[4] = new JLabel("Signed out by: " + Integer.toString(MusicResource.getItems().get(i).getPerson()));
-      info[5] = new JLabel("Due date: " + MusicResource.getItems().get(i).getDate());
+      info[4] = new JTextField(Integer.toString(MusicResource.getItems().get(i).getPerson()));
+      info[5] = new JTextField(MusicResource.getItems().get(i).getDate());
     }
   }
   
@@ -178,6 +178,7 @@ public class Inventory extends JPanel{
     }
   }
   
+  //edit the item that the user is currently on
   class EditListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
 ///do action
