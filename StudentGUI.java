@@ -44,9 +44,7 @@ public class StudentGUI extends JPanel{
   
   class recentListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      new Recent();
-      frame.setVisible(false);
-      frame.dispose();
+      new RecentStudent();
     }
   }
 }
