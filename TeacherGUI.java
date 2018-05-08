@@ -45,16 +45,24 @@ public class TeacherGUI extends JPanel{
     JPanel panel = new JPanel();
     JLabel question = new JLabel ("What would you like to do?");
     JButton recent = new JButton ("View recent actions");
+    JButton edit = new JButton ("Edit my insturments");
     
     recent.addActionListener(new recentListener());
+    edit.addActionListener(new editListener());
     
     panel.add(question);
     panel.add(recent);
+    panel.add(edit);
     
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.add(panel);
     frame.setVisible (true);
   }
-  
+  class editListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      new Edit();
+    }
+  }
   class recentListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
       new Recent();
