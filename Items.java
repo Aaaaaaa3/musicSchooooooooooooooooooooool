@@ -89,6 +89,17 @@ public class Items {
     return this.dueDate;
   }
   /********************************************************* the set methods ***********************************************/
+    public void setName(String name){
+    this.name = name;
+  }
+  
+  public void setCondition(boolean cond){
+    this.condition = cond;
+  }
+  
+  public void setNum(String num){
+    this.num = num;
+  }
   
   public void setPerson(int student){
     this.stu = student;
