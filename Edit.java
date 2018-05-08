@@ -4,13 +4,14 @@ import javax.swing.*;
 
 public class Edit extends JPanel implements ActionListener{
   JFrame frame2 = new JFrame("aaa");
-  
+  JPanel panel2 = new JPanel();
+  JButton ok = new JButton("OK");
+  JButton cancel = new JButton("Cancel");
   public Edit(){
     
     DoubleLinkedList<Items> list = MusicResource.getItems();
     
     
-    JPanel panel2 = new JPanel();
     
     frame2.setVisible(false);
     frame2.setSize(500,500);
@@ -38,8 +39,6 @@ public class Edit extends JPanel implements ActionListener{
       JLabel numLab = new JLabel("Number: ");
       JTextField num = new JTextField(tempItem.getNum(), 10);
       
-      JButton ok = new JButton("OK");
-      JButton cancel = new JButton("Cancel");
       ok.addActionListener(this);
       cancel.addActionListener(this);
       
@@ -60,15 +59,15 @@ public class Edit extends JPanel implements ActionListener{
     }
     
   }
+  
   public void actionPerformed(ActionEvent e){
     if (e.getSource()== ok){
       System.out.println("1");
     }
     else{
-     this.setVisible(false);
-     frame2.dispose();
+      this.setVisible(false);
+      frame2.dispose();
     }
- 
+    
   }
-  
 }
