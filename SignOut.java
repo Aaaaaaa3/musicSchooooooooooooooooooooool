@@ -2,7 +2,7 @@
  * Julia Zhao and Tasha Xiao
  * May 02 2018 
  * Version 1.0.0
- * Interface to sign out
+ * Interface to sign out or add object
  */
 
 import java.awt.*;
@@ -58,6 +58,7 @@ public class SignOut extends JPanel{
     instrumentPanel.add(instrNum);
     instrumentPanel.add(condition1);
     instrumentPanel.add(signOut1);
+    instrumentPanel.add(add1);
     
     sheetPanel.add(studentNum2);
     sheetPanel.add(sheetMusic);
@@ -130,20 +131,65 @@ public class SignOut extends JPanel{
       //check if item is found
       Items item = MusicResource.checkItem(name, MusicResource.getItems());
       if (item==null){
-        Items newItem = new Items();
-        newItem.setName(name);
-        newItem.setCondition(condition1.isSelected());
-        if (condition1.isSelected()==false){
-          newItem.setDescr("*Out to repairs");
+        String instrumNum = instrNum.getText();
+        String stuNum=studentNum1.getText();
+        boolean validInstrumentNum;
+        
+        if (instrumNum.equals("")){
+          validInstrumentNum=false;
+        }
+        else{
+          validInstrumentNum=isInt(instrumNum);//check if instrument number is valid (no letters)
+        }
+        boolean validStudentNum=false;
+        
+        if (validInstrumentNum==false){
+          MenuGUI.createPopUp("Instrument number is not valid. Can't add.");
         }
         
-        MusicResource.getItems().add(newItem); //add new item into database
+        if (!stuNum.equals("")){ //blank student number = instrument not assigned 
+          validStudentNum=isInt(stuNum);//check if student number is valid (no letters)
+          
+          if (validStudentNum==false){
+            MenuGUI.createPopUp("Student number is not valid. Can't add.");
+          }
+        }
+        else{
+          Items newItem = new Items();
+          newItem.setName(name);
+          newItem.setCondition(condition1.isSelected());
+          newItem.setNum(instrumNum);
+          if (validStudentNum==true){ //student has been assigned
+            newItem.setPerson(Integer.parseInt(stuNum));
+            //finds current date
+            String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            //increases day by 1
+            item.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
+          }
+          if (condition1.isSelected()==false){
+            newItem.setDescr("Out to repairs");
+          }
+          MusicResource.getItems().add(newItem); //add new item into database
+        }
       }
       
       else{
         MenuGUI.createPopUp("Item is already found in database! Can't add.");
       }
     }
+  }
+  
+  public boolean isInt(String str){
+    boolean valid = true;
+    int i=0;
+    //check if the instrument number is valid (no letters)
+    do{
+      if (!Character.isDigit(str.charAt(i))){
+        valid=false;
+      }
+      i++;
+    }while (valid==true && i<str.length());
+    return valid;
   }
   
   public static void main(String [] args){
