@@ -76,15 +76,14 @@ public class Edit extends JPanel implements ActionListener{
       else if (cond.equals("Not OK")){
         tempItem.setCondition(false);
       }
-     // if (SignOut.isInt(num.getText())==false){
+     if (SignOut.isInt(num.getText())==false){
       tempItem.setNum(num.getText());
-     // }
+      }
      // else{
       //  MenuGUI.createPopUp("Instrument number invalid. The original number will be saved instead.");
      // }
-      
     }
-    
+    DoubleLinkedList.sortAlpha(MusicResource.getItems());
     this.setVisible(false);
     frame2.dispose();
   }

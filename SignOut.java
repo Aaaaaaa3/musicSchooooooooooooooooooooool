@@ -202,6 +202,7 @@ public class SignOut extends JPanel{
             newItem.setDescr("Out to repairs");
           }
           MusicResource.getItems().add(newItem); //add new item into database
+          DoubleLinkedList.sortAlpha(MusicResource.getItems());
         }
       }
       
