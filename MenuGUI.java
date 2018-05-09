@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MenuGUI extends JPanel implements ActionListener{
+public class MenuGUI extends JPanel{
   JFrame frame = new JFrame ("Music Sign Out");
   JButton teacher = new JButton ("Teacher");
   JButton student = new JButton ("Student");
@@ -22,10 +22,10 @@ public class MenuGUI extends JPanel implements ActionListener{
     JPanel panel = new JPanel (new FlowLayout ());
     JLabel label = new JLabel ("What would you like to do?");
     
-    teacher.addActionListener(this);
-    student.addActionListener(this);
-    inventory.addActionListener(this);
-    quit.addActionListener(this);
+    teacher.addActionListener(new TeacherListener());
+    student.addActionListener(new StudentListener());
+    inventory.addActionListener(new InventoryListener());
+    quit.addActionListener(new QuitListener());
     
     panel.add(label);
     panel.add(teacher);
@@ -49,24 +49,34 @@ public class MenuGUI extends JPanel implements ActionListener{
     frame.setVisible(true);
   }
   
-  public void actionPerformed(ActionEvent e){
-    if (e.getSource()==student){ //student button is clicked
+  class StudentListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
       new StudentGUI();
+      frame.dispose();
     }
-    else if(e.getSource()==teacher){
-     //TeacherGUI.run(items);
+  }
+  class TeacherListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      //new TeacherGUI();
+      frame.dispose();
     }
-    else {//clicked "QUIT"
+  }
+  class InventoryListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+      new Inventory();
+      frame.dispose();
+    }
+  }
+  class QuitListener implements ActionListener{
+    public void actionPerformed(ActionEvent event){
       MusicResource.printFile(MusicResource.getItems());
       //thank you
       System.exit(0);
     }
-    this.setVisible(false);
-    frame.dispose();
   }
   
-  public static void main(String[]args){
-    new MenuGUI();
-  }
+//  public static void main(String[]args){
+//    new MenuGUI();
+//  }
   
 }
