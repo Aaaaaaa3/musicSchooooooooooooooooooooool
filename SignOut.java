@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class SignOut extends JPanel{
   JFrame frame = new JFrame ("Music Sign Out");
+  JTabbedPane tabbedPane = new JTabbedPane();
   JTextField studentNum1 = new JTextField("Student number");
   JTextField studentNum2 = new JTextField("Student number");
   JTextField studentNum3 = new JTextField("Student number");
@@ -37,7 +38,6 @@ public class SignOut extends JPanel{
       }
     });
     //super(new GridLayout(1, 1));
-    JTabbedPane tabbedPane = new JTabbedPane();
     JPanel instrumentPanel = new JPanel();
     JPanel sheetPanel = new JPanel();
     JPanel equipmentPanel = new JPanel();
@@ -50,8 +50,12 @@ public class SignOut extends JPanel{
     JButton add2 = new JButton ("Add Entry");
     JButton add3 = new JButton ("Add Entry");
     
-    signOut1.addActionListener(new SignOutListener1());
-    add1.addActionListener (new AddListener1());
+    signOut1.addActionListener(new SignOutListener());
+    signOut2.addActionListener(new SignOutListener());
+    signOut3.addActionListener(new SignOutListener());
+    add1.addActionListener (new AddListener());
+    add2.addActionListener (new AddListener());
+    add3.addActionListener (new AddListener());
     
     instrumentPanel.add(studentNum1);
     instrumentPanel.add(instrument);
@@ -78,12 +82,25 @@ public class SignOut extends JPanel{
     
     frame.add(tabbedPane); 
     frame.setVisible(true);
-  }
-  
-  class SignOutListener1 implements ActionListener{
+  } 
+  class SignOutListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
+      String name="";
+      String idNumber="";
       //get the information from the field
-      String name = instrument.getText();
+      if (tabbedPane.getSelectedIndex()==0){
+        name=instrument.getText();
+        idNumber = studentNum1.getText();
+        
+      }
+      else if (tabbedPane.getSelectedIndex()==1){
+        name = sheetMusic.getText();
+        idNumber = studentNum2.getText();
+      }
+      else{ //last tab
+        name = equipment.getText();
+        idNumber = studentNum3.getText();
+      }
       //check if item is found
       Items item = MusicResource.checkItem(name, MusicResource.getItems());
       if (item==null){
@@ -95,8 +112,7 @@ public class SignOut extends JPanel{
           MenuGUI.createPopUp("Out to repairs. Cannot be signed out.");
         }
         else{
-          try{
-            String idNumber = studentNum1.getText();
+          if (isInt(idNumber)==true){
             //check if item is already signed out by a different user
             if (item.getPerson() !=-1 && item.getPerson()!=Integer.parseInt(idNumber)){
               MenuGUI.createPopUp("Already signed out by someone else!");
@@ -116,7 +132,7 @@ public class SignOut extends JPanel{
               }
             }
           }
-          catch (Exception e){
+          else{
             MenuGUI.createPopUp("Please make sure the student number only has numbers!");
           }
         }
@@ -124,26 +140,42 @@ public class SignOut extends JPanel{
     }
   }
   
-  class AddListener1 implements ActionListener{
+  class AddListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      //make sure the instrument is not already in the system     
-      String name = instrument.getText();
+      //make sure the instrument is not already in the system  
+      String name="";
+      String itemNum="";
+      String stuNum="";
+      //get the information from the field
+      if (tabbedPane.getSelectedIndex()==0){
+        name = instrument.getText();
+        itemNum=instrNum.getText();
+        stuNum=studentNum1.getText();
+      }
+      else if (tabbedPane.getSelectedIndex()==1){
+        name=sheetMusic.getText();
+        itemNum=sheetNum.getText();
+        stuNum=studentNum2.getText();
+      }
+      else{ //last tab
+        name=equipment.getText();
+        itemNum=equipNum.getText();
+        stuNum=studentNum3.getText();
+      }     
       //check if item is found
       Items item = MusicResource.checkItem(name, MusicResource.getItems());
       if (item==null){
-        String instrumNum = instrNum.getText();
-        String stuNum=studentNum1.getText();
-        boolean validInstrumentNum;
+        boolean validNum;
         
-        if (instrumNum.equals("")){
-          validInstrumentNum=false;
+        if (itemNum.equals("")){
+          validNum=false;
         }
         else{
-          validInstrumentNum=isInt(instrumNum);//check if instrument number is valid (no letters)
+          validNum=isInt(itemNum);//check if instrument number is valid (no letters)
         }
         boolean validStudentNum=false;
         
-        if (validInstrumentNum==false){
+        if (validNum==false){
           MenuGUI.createPopUp("Instrument number is not valid. Can't add.");
         }
         
@@ -158,7 +190,7 @@ public class SignOut extends JPanel{
           Items newItem = new Items();
           newItem.setName(name);
           newItem.setCondition(condition1.isSelected());
-          newItem.setNum(instrumNum);
+          newItem.setNum(itemNum);
           if (validStudentNum==true){ //student has been assigned
             newItem.setPerson(Integer.parseInt(stuNum));
             //finds current date

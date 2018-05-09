@@ -1,12 +1,9 @@
-//add, delete, edit, search, previous/next
-//won't delete tuba 1? dont know why
-
-//previous/next done
 //search done
+//add done
+//delete done
 
 //IN PROGRESS:
-//add 
-//delete
+//previous/next
 //edit
 
 import java.awt.*;
@@ -40,6 +37,7 @@ public class Inventory extends JPanel{
     back.addActionListener(new BackListener());
     next.addActionListener(new NextListener());
     add.addActionListener(new AddListener());
+    edit.addActionListener(new EditListener());
     delete.addActionListener(new DeleteListener());
     searchButton.addActionListener(new SearchListener());
     
@@ -70,7 +68,7 @@ public class Inventory extends JPanel{
   }
   
   //assigns the values into the label
-  public void setInfo (JLabel[] info, int i){
+  public void setInfo (JTextField[] info, int i){
     info[0].setText("Name: " + MusicResource.getItems().get(i).getName());
     info[1].setText("Number: " + MusicResource.getItems().get(i).getNum());
     if (MusicResource.getItems().get(i).getCondition()==false){
@@ -116,9 +114,13 @@ public class Inventory extends JPanel{
         index=index-1;
         setInfo(info, index);
       }
+      else if (MusicResource.getItems().size()==1){
+        MenuGUI.createPopUp("There is only one item!");
+      }
       else{
         MenuGUI.createPopUp("No more items!");
       }
+      System.out.println ("Index: " + index);
     }
   }
   
@@ -128,9 +130,13 @@ public class Inventory extends JPanel{
         index=index+1;
         setInfo(info, index);
       }
+      else if (MusicResource.getItems().size()==1){
+        MenuGUI.createPopUp("There is only one item!");
+      }
       else{
         MenuGUI.createPopUp("No more items!");
       }
+      System.out.println ("Index: " + index);
     }
   }
   
@@ -143,31 +149,35 @@ public class Inventory extends JPanel{
   //deletes the item that the user is on
   class DeleteListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-      if (MusicResource.getItems().size()>0){ //there are items in the list
+      //there are items in the list
+      if (MusicResource.getItems().size()>0){ 
         //check if item is taken out or at repairs
         if (MusicResource.getItems().get(index).getCondition()==false ||MusicResource.getItems().get(index).getPerson()!=-1 ){
           MenuGUI.createPopUp("Item is currently taken out or at repairs! Cannot sign out.");
         }
+        //item is free and in good condition
         else{
-          MusicResource.getItems().remove(index);
-          index--;
+          MusicResource.getItems().remove(index); //remove the item
           MenuGUI.createPopUp("Item successfully removed!");
-          if (MusicResource.getItems().size()>2){ //more than two items in the list
-            if (index<MusicResource.getItems().size()-1){
-              index=index+1; //go to the next item
-              setInfo(info,index);
+          if (MusicResource.getItems().size()>1){ //two items or more left in the list 
+            if (index>0){ //subtract 1 from index
+              index--;
             }
-            else{
-              index=index-1;
-              setInfo(info, index);
+            else{ //index is 0
+              index++;
             }
+            setInfo(info, index); //display the item's info
           }
-          else{//removing the last item
+          else if (MusicResource.getItems().size()==1){ //1 item left in the list
+            index=0; //set index to 0
+            setInfo(info, index);
+          }
+          else if (MusicResource.getItems().size()==0){//removing the last item
             for (int i=0; i<6; i++){
-              info[i].setText("");
+              info[i].setText(""); //no info left to display
             }
             MenuGUI.createPopUp("No more items!");
-            delete.setVisible(false);
+            delete.setVisible(false); //don't allow the user to delete any more
           }
         }
       }
@@ -181,7 +191,7 @@ public class Inventory extends JPanel{
   //edit the item that the user is currently on
   class EditListener implements ActionListener{
     public void actionPerformed(ActionEvent event){
-///do action
+      new Edit();
     }
   }
   

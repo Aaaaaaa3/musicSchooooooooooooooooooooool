@@ -1,9 +1,10 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class Edit extends JPanel implements ActionListener{
-  JFrame frame2 = new JFrame("aaa");
+  JFrame frame2 = new JFrame("Edit an Item");
   JPanel panel2 = new JPanel();
   JButton ok = new JButton("OK");
   JButton cancel = new JButton("Cancel");
@@ -75,12 +76,16 @@ public class Edit extends JPanel implements ActionListener{
       else if (cond.equals("Not OK")){
         tempItem.setCondition(false);
       }
+     // if (SignOut.isInt(num.getText())==false){
       tempItem.setNum(num.getText());
+     // }
+     // else{
+      //  MenuGUI.createPopUp("Instrument number invalid. The original number will be saved instead.");
+     // }
       
     }
     
     this.setVisible(false);
     frame2.dispose();
-    
   }
 }
