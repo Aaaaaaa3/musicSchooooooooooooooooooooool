@@ -8,8 +8,12 @@
 class DoubleLinkedList<E> { 
   private Node<E> head;//first item in the list
   private Node <E> tail;//last item in the list
-  
-  public void add(E item) { //add an item to the list
+   
+  /* add
+   * adds an item to the list
+   * @param item      the item to be added
+   */
+  public void add(E item) {
     //no items in the list
     if (head==null) { //creates a new head with value item, next node is null
       head=new Node<E>(item);
@@ -21,17 +25,27 @@ class DoubleLinkedList<E> {
     tempNode.setNext(new Node<E>(item, tempNode, null));
     tail=tempNode.getNext();
     return;
-  }
+  }//end of add
   
-  public E get(int index) { //gets the value of item at index
+  /* get
+   * gets an item at an indicated index value
+   * @param index      the index of the item to be retrieved
+   * @return           the item at the indicated index
+   */
+  public E get(int index) {
     Node<E> tempNode = head;
     for (int i=0; i<index; i++){
       tempNode=tempNode.getNext();   
     }
     return tempNode.getItem();
-  }
+  }//end of get
   
-  public void set(int index, E item) { //gets the value of item at index
+  /* set
+   * sets an item to an indicated index value
+   * @param item      the item to be replaced
+   * @param index     the index in the list the item is to be added to
+   */
+  public void set(int index, E item) { 
     Node<E> tempNode = head;
     for (int i=0; i<index; i++){
       tempNode=tempNode.getNext();   
@@ -39,7 +53,12 @@ class DoubleLinkedList<E> {
     tempNode.setItem(item);
   }
   
-  public int indexOf(E item) { //returns index of item
+  /* indexOf
+   * finds the index of an indicated item
+   * @param item      the item to be found
+   * @return          the index of the item
+   */
+  public int indexOf(E item) {
     Node<E> tempNode = head;
     int counter=0;
     while (tempNode!=null){
@@ -51,15 +70,16 @@ class DoubleLinkedList<E> {
       counter++;
     }
     return counter;
-  }
+  }//end of indexOf
   
-  public E remove(int index) { //removes an element of the list
+  /* remove
+   * removes an item from the list
+   * @param item      the item to be removed
+   */
+  public E remove(int index) {
     int counter=0;
-    if (index==0 && head.getNext()!=null){ //if you need to remove the first item
+    if (index==0){ //if you need to remove the first item
       head=new Node<E>(head.getNext().getItem(), head, head.getNext().getNext());
-    }
-    else if (index==0 && head.getNext()==null){
-      clear();
     }
     Node <E> tempNode=head;
     while (tempNode!=null){
@@ -77,13 +97,20 @@ class DoubleLinkedList<E> {
       counter++;
     }
     return null;
-  }
+  }//end of remove
   
-  public void clear() { //clear the list
+  /* clear
+   * empties the list
+   */
+  public void clear() {
     head=null;
-  }
+  }//end of clear
   
-  public int size() { //returns size of list
+  /* size
+   * finds the amount of items to the list
+   * @return        the size of the list
+   */
+  public int size() {
     Node <E> tempNode=head;
     int counter=0;
     while (tempNode!=null){
@@ -91,9 +118,12 @@ class DoubleLinkedList<E> {
       tempNode=tempNode.getNext();
     }
     return counter;
-  }
+  }//end of size
   
-  //insertion
+  /* sortAlpha
+   * sorts a list alphabetically from A to Z(insertion sort)
+   * @param a     the list to be sorted
+   */
   public static void sortAlpha(DoubleLinkedList<Items> a){
     for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
@@ -107,8 +137,12 @@ class DoubleLinkedList<E> {
       
       a.set(index+1,tempItem); //insert item in proper position
     }
-  }
+  }//end of sortAlpha
   
+   /* sortChrono
+   * sorts a list chronologically from most recent to least recent(insertion sort)
+   * @param a     the list to be sorted
+   */
   public static void sortChrono(DoubleLinkedList<Items> a){
     for (int i=1; i<a.size(); i++){ //starts at 2nd element
       int index=i-1;
@@ -122,5 +156,5 @@ class DoubleLinkedList<E> {
       
       a.set(index+1,tempItem); //insert item in proper position
     }
-  }
-}
+  }//end of sortChrono
+}//end of DoubleLinkedList.java
