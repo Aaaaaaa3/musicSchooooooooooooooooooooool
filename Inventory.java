@@ -1,22 +1,23 @@
-//search done
-//add done
-//delete done
+/* Inventory.java
+ * Julia Zhao and Tasha Xiao
+ * May 09 2018
+ * Version 1.0.0
+ * Displays everything currently in the list
+ */
 
-//IN PROGRESS:
-//previous/next
-//edit
-
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class Inventory extends JPanel{
+  
+  //declare GUI components
   JFrame frame = new JFrame ("Music Sign Out");
   int index=0;
   JTextField[] info = new JTextField[6];
   JButton delete = new JButton ("Delete item"); //delete the item that the user is on right now
   JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
+  //constructor
   public Inventory (){
     frame.setSize(400,300);
     //Print to file once the window is closed
@@ -25,7 +26,7 @@ public class Inventory extends JPanel{
         MusicResource.printFile(MusicResource.getItems());
       }
     });
-    
+    //set GUI components
     JPanel panel = new JPanel();
     JButton back = new JButton ("Back");
     JButton next = new JButton ("Next");
@@ -43,13 +44,15 @@ public class Inventory extends JPanel{
     for (int i=0; i<6; i++){
       info[i]=new JTextField();
     }
-    
+    //set information when list is not empty
     if (MusicResource.getItems()!=null){
     setInfo(info, index);
     }
+    
     else{
-      MenuGUI.createPopUp("No items!");
+      JOptionPane.showMessageDialog(null, "No items!");
     }
+    //add the panels
     for (int i=0; i<6; i++){
       panel.add(info[i]);
     }
@@ -66,7 +69,11 @@ public class Inventory extends JPanel{
     frame.setVisible(true);
   }
   
-  //assigns the values into the label
+  /* setInfo
+   * assigns information onto the label
+   * @param info        the text field to be edited
+   * @param i          
+   */
   public void setInfo (JTextField[] info, int i){
     info[0].setText("Name: " + MusicResource.getItems().get(i).getName());
     info[1].setText("Number: " + MusicResource.getItems().get(i).getNum());
@@ -114,10 +121,10 @@ public class Inventory extends JPanel{
         setInfo(info, index);
       }
       else if (MusicResource.getItems().size()==1){
-        MenuGUI.createPopUp("There is only one item!");
+        JOptionPane.showMessageDialog(null, "There is only one item!");
       }
       else{
-        MenuGUI.createPopUp("No more items!");
+        JOptionPane.showMessageDialog(null, "No more items!");
       }
       System.out.println ("Index: " + index);
     }
@@ -130,10 +137,10 @@ public class Inventory extends JPanel{
         setInfo(info, index);
       }
       else if (MusicResource.getItems().size()==1){
-        MenuGUI.createPopUp("There is only one item!");
+        JOptionPane.showMessageDialog(null, "There is only one item!");
       }
       else{
-        MenuGUI.createPopUp("No more items!");
+        JOptionPane.showMessageDialog(null, "No more items!");
       }
       System.out.println ("Index: " + index);
     }
@@ -152,12 +159,12 @@ public class Inventory extends JPanel{
       if (MusicResource.getItems().size()>0){ 
         //check if item is taken out or at repairs
         if (MusicResource.getItems().get(index).getCondition()==false ||MusicResource.getItems().get(index).getPerson()!=-1 ){
-          MenuGUI.createPopUp("Item is currently taken out or at repairs! Cannot sign out.");
+          JOptionPane.showMessageDialog(null, "Item is currently taken out or at repairs! Cannot sign out.");
         }
         //item is free and in good condition
         else{
           MusicResource.getItems().remove(index); //remove the item
-          MenuGUI.createPopUp("Item successfully removed!");
+          JOptionPane.showMessageDialog(null, "Item successfully removed!");
           if (MusicResource.getItems().size()>1){ //two items or more left in the list 
             if (index>0){ //subtract 1 from index
               index--;
@@ -175,13 +182,13 @@ public class Inventory extends JPanel{
             for (int i=0; i<6; i++){
               info[i].setText(""); //no info left to display
             }
-            MenuGUI.createPopUp("No more items!");
+            JOptionPane.showMessageDialog(null, "No more items!");
             delete.setVisible(false); //don't allow the user to delete any more
           }
         }
       }
       else{ //nothing in the list
-        MenuGUI.createPopUp("No items!");
+        JOptionPane.showMessageDialog(null, "No items!");
         delete.setVisible(false);
       }
     }
