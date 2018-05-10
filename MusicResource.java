@@ -1,14 +1,13 @@
-/**
- * Read in the file
- * Add and remove students
- * 
- * Finished: txt file read in & saved to list
- * 
- * Changed: turned sign in and sign out into seperate methods
+/* MusicResource.java
+ * Julia Zhao and Tasha Xiao
+ * May 06 2018
+ * Version 1.0.0
+ * Where information/methods(not gui) are stored
+ * RUN PROGRAM HERE
  */
-import java.time.LocalDate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+//import java.time.LocalDate;
+//import java.text.SimpleDateFormat;
 import java.io.*;
 import java.util.Scanner;
 
@@ -16,14 +15,19 @@ public class MusicResource {
   private static DoubleLinkedList<Items> list;
   private static DoubleLinkedList<Person> students;
   
-  //saves the io file
+  /* printFile
+   * prints the list of items to .txt file
+   * @param DoubleLinkedList<Items> array       the list to be printed
+   */
   public static void printFile(DoubleLinkedList<Items> array){
+    DoubleLinkedList.sortAlpha(array);
     try{
-      PrintWriter printOut = new PrintWriter ("Tasha.txt");
+      PrintWriter printOut = new PrintWriter ("Items.txt");
       for (int i=0; i<array.size(); i++){
         printOut.print(array.get(i).getName()+" ");
         printOut.print(array.get(i).getCondition() + " ");
         printOut.print(array.get(i).getNum() + " ");
+        printOut.print(array.get(i).getStatus() + " ");
         if (array.get(i).getPerson()!= -1){
           printOut.print(array.get(i).getPerson() + " ");
           printOut.print(array.get(i).getDate() + " ");
@@ -36,66 +40,75 @@ public class MusicResource {
     catch (Exception e){
       System.out.println ("Error 3");
     }
-  }
+  }//end of printFile
   
-  //signs in an item 
-  public static void signIn(DoubleLinkedList<Items> list){
-    Scanner input = new Scanner(System.in);
-    System.out.println("What do you want to sign in?");
-    String temp = input.nextLine();
-    Items tempTemp = checkItem(temp, list);
-    //checks if item is found
-    if (tempTemp == null){
-      System.out.println("Not found.");
-    }
-    else {
-      tempTemp.setPerson(-1);
-      tempTemp.setDate(null);
-    }
-  }//end of sign in
-  //signs out an item
-  public static void signOut(DoubleLinkedList<Person> students, DoubleLinkedList<Items> list){
-    Scanner input = new Scanner(System.in);
-    System.out.println("What do you want to sign out?");
-    String temp = input.nextLine();
-    Items tempTemp = checkItem(temp, list);
-    //checks if item is found
-    if (tempTemp == null){
-      System.out.println("Not found.");
-    }
-    else {
-      //checks if item is out on repairs
-      if (tempTemp.getCondition() == false){
-        System.out.println("This is currently out to repairs.");
-      }
-      else{
-        System.out.println("Enter your student id.");
-        temp = input.nextLine();
-        
-        //checks if item is already signed out by a different user
-        if (tempTemp.getPerson() != -1 && tempTemp.getPerson() != Integer.parseInt(temp)){
-          System.out.println("This is already signed out by someone else.");
-        }
-        else{
-          Person tempStu = checkStudent(Integer.parseInt(temp),students);
-          if (tempStu == null){
-            System.out.println("Student not found.");
-          }
-          else {
-            tempTemp.setPerson(tempStu.getNum());
-            //finds current date
-            String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-            //increases day by 1
-            tempTemp.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
-          }
-        }
-      }
-    }
-  }//end of sign out
+  /* signIn
+   * assigns a student and due date to an item currently in the list
+   * @param DoubleLinkedList<Items> list       the list to be looked through
+   */
+//  public static void signIn(DoubleLinkedList<Items> list){
+//    Scanner input = new Scanner(System.in);
+//    System.out.println("What do you want to sign in?");
+//    String temp = input.nextLine();
+//    Items tempTemp = checkItem(temp, list);
+//    //checks if item is found
+//    if (tempTemp == null){
+//      System.out.println("Not found.");
+//    }
+//    else {
+//      tempTemp.setPerson(-1);
+//      tempTemp.setDate(null);
+//    }
+//  }//end of sign in
   
-  //reads in students from txt
+  /* signOut
+   * removes the student from the list
+   * @param DoubleLinkedList<Items> list       the list to be looked through
+   //   */
+//  public static void signOut(DoubleLinkedList<Person> students, DoubleLinkedList<Items> list){
+//    Scanner input = new Scanner(System.in);
+//    System.out.println("What do you want to sign out?");
+//    String temp = input.nextLine();
+//    Items tempTemp = checkItem(temp, list);
+//    //checks if item is found
+//    if (tempTemp == null){
+//      System.out.println("Not found.");
+//    }
+//    else {
+//      //checks if item is out on repairs
+//      if (tempTemp.getCondition() == false){
+//        System.out.println("This is currently out to repairs.");
+//      }
+//      else{
+//        System.out.println("Enter your student id.");
+//        temp = input.nextLine();
+//        
+//        //checks if item is already signed out by a different user
+//        if (tempTemp.getPerson() != -1 && tempTemp.getPerson() != Integer.parseInt(temp)){
+//          System.out.println("This is already signed out by someone else.");
+//        }
+//        else{
+//          Person tempStu = checkStudent(Integer.parseInt(temp),students);
+//          if (tempStu == null){
+//            System.out.println("Student not found.");
+//          }
+//          else {
+//            tempTemp.setPerson(tempStu.getNum());
+//            //finds current date
+//            String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+//            //increases day by 1
+//            tempTemp.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
+//          }
+//        }
+//      }
+//    }
+//  }//end of sign out
+  
+  /* readStudents
+   * read in students from txt file
+   * @return      a double linked list of students (under the class Person)
+   */
   public static DoubleLinkedList<Person> readStudents (){
-    DoubleLinkedList<Items> list = readItems();
     DoubleLinkedList<Person> students = new DoubleLinkedList<Person>();
     try{
       Scanner read = new Scanner (new File ("students.txt"));
@@ -105,27 +118,33 @@ public class MusicResource {
         newPerson.setName(read.nextLine());
         students.add(newPerson);
       }
+      read.close();
     }
     catch(Exception e){
       System.out.println("Error 2");
     }
     return students;
-  }
-  //reads in items from txt
+  }//end of readStudents
+  
+  /* readItems
+   * read in items from txt file
+   * @return      a double linked list of items
+   */
   public static DoubleLinkedList<Items> readItems(){
     DoubleLinkedList<Items> list = new DoubleLinkedList<Items>();
     try {
-      File file = new File("Tasha.txt");
+      File file = new File("Items.txt");
       Scanner fileInput = new Scanner(file);
       
       while (fileInput.hasNext()){
         String temp = fileInput.nextLine();
         Scanner stringInput = new Scanner(temp);
         
-        Items tempItem = new Items(stringInput.next(), stringInput.nextBoolean(),
-                                   stringInput.next());
+        //fill in the commonly shared features
+        Items tempItem = new Items(stringInput.next(), stringInput.next(),
+                                   stringInput.next(), stringInput.next());
         String tempTemp = stringInput.next();
-        //if it has a student
+        //if the item has a student
         if (tempTemp.charAt(0) != '*'){
           tempItem.setPerson(Integer.parseInt(tempTemp));
           
@@ -134,26 +153,38 @@ public class MusicResource {
         //set description
         tempItem.setDescr(temp.substring(temp.indexOf('*')+1));       
         list.add(tempItem);
-        
+        stringInput.close();
       }
+      fileInput.close();
     }
     catch(Exception E){
       System.out.println("Error 1");
     }
     return list;
-  }
-  //returns the searched student
+  }//end of readItems
+  
+  /* checkStudent
+   * finds a student in the list based on their student number
+   * @return      the item in the list, or null if not found
+   */
   public static Person checkStudent (int num, DoubleLinkedList<Person> students){
     int index=0;
+    //goes through the entire list
     while (index < students.size()){
       if (num==students.get(index).getNum()){
+        //found the student
         return students.get(index);
       }
       index++;
     }
+    //if student is not found
     return null;
-  }
-  //returns the searched item
+  }//end of checkStudent
+  
+  /* checkItem
+   * finds an item in the list based on the name of the item
+   * @return      an item in the list if found, null if not found
+   */
   public static Items checkItem (String input, DoubleLinkedList<Items> list){
     for (int i = 0; i<list.size(); i++){
       if (input.equals(list.get(i).getName())){
@@ -161,15 +192,25 @@ public class MusicResource {
       }
     }
     return null;
-  }
+  }//end of checkItem
   
+  /* getItems
+   * gets the list of items
+   * @return      the list of items
+   */
   public static DoubleLinkedList<Items> getItems(){
     return list;
   }
   
+  /* getStudents
+   * gets the list of students
+   * @return      the list of students
+   */
   public static DoubleLinkedList<Person> getStudents(){
     return students;
   }
+  
+  //main method
   public static void main(String[] args) { 
     
 //read in the files----------------------------------
@@ -184,54 +225,8 @@ public class MusicResource {
     for (int i=0; i<students.size(); i++){
       System.out.println (students.get(i).getNum());
     }
-//------------------------------------------------------------------------
-    new MenuGUI();
     
-//      if (temp.equals("3")){
-//        //sort the list
-//        DoubleLinkedList.sortChrono(list);
-//        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-//        System.out.println ("Today's date: " + currentDate);
-//        
-//        System.out.println("Press 1 if you want to see general, 2 if you want to see for a specific student:");
-//        temp = input.nextLine();
-//        
-//        
-//        if (temp.equals("1")){
-//          int j = 0;
-//          while (j<list.size() && list.get(j).getDate().compareTo(currentDate)>=0){
-//            list.get(j).display(1);
-//            j++;
-//          }
-//          System.out.println ("\nOVERDUE:\n");
-//          while (j<list.size() && list.get(j).getPerson() != -1){
-//            list.get(j).display(1);
-//            j++;
-//          }
-//          
-//        }
-//        else if (temp.equals("2")){
-//          System.out.println("Which student do you want to see?");
-//          temp = input.nextLine();
-//          int j = 0;
-//          while (j<list.size() && list.get(j).getDate().compareTo(currentDate)>=0){
-//            list.get(j).display(Integer.parseInt(temp));
-//            j++;
-//          }
-//          System.out.println ("\nOVERDUE:\n");
-//          while (j<list.size() && list.get(j).getPerson() != -1){
-//            list.get(j).display(Integer.parseInt(temp));
-//            j++;
-//          }
-//        }
-//        
-//        DoubleLinkedList.sortAlpha(list);
-//      }
-      
-    //}
-  }
-  
-}
-/*Txt file format:
- * Name condition(0/1) number description student dueDate
- */
+    //start the gui
+    new MenuGUI();
+  }//end of main
+}//end of MusicResource.java
