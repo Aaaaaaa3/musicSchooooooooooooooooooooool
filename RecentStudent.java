@@ -1,11 +1,18 @@
-import java.time.LocalDate;
+/* Recent.java
+ * Julia Zhao and Tasha Xiao
+ * May 09 2018
+ * Version 1.0.0
+ * Shows the recent sign outs for a specific student(gui)
+ */
 import java.text.SimpleDateFormat;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class RecentStudent {
+  
+  //constructor
   public RecentStudent(){
+    
+    //create gui components
     JFrame frame = new JFrame ("Music Sign Out");
     frame.setSize(300,400);
     JFrame frame2 = new JFrame();
@@ -13,9 +20,11 @@ public class RecentStudent {
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
     JLabel label = new JLabel ("Recent Sign Outs:");
     JLabel overdue = new JLabel("----Overdue:---");
-    
+
     String stuNum = JOptionPane.showInputDialog(frame2, "What's your name?");
 
+    if (stuNum != null){
+    //finds the items according to student number
     DoubleLinkedList<Items> list = MusicResource.getItems();
     DoubleLinkedList.sortChrono(list);
     JLabel signOuts[] = new JLabel[list.size()];
@@ -28,19 +37,21 @@ public class RecentStudent {
       }
     }
     
-    
+    //add in the labels
     panel.add(label);
     
     String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
     int j = 0;
     
+    //not overdue items
     while (j<list.size() && (signOuts[j] != null) && list.get(j).getDate().compareTo(currentDate)>=0){
       panel.add(signOuts[j]);
       j++;
     }
-    
+    //overdue label
     panel.add(overdue);
     
+    //overdue items
     while (j<list.size() && (signOuts[j] != null) && list.get(j).getPerson() != -1){
       panel.add(signOuts[j]);
       j++;
@@ -49,6 +60,7 @@ public class RecentStudent {
 
     frame.add(panel);
     frame.setVisible(true);
+    }
     
   }
-}
+}//end of RecentStudent.java
