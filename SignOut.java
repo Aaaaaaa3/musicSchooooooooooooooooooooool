@@ -26,7 +26,6 @@ public class SignOut extends JPanel{
   JTextField equipNum = new JTextField("Equipment Number");
   
   public SignOut(){ //constructor
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(400,300); //sets size of frame
     //Print to file once the window is closed
     frame.addWindowListener(new WindowAdapter(){ //overrides original (default) method of the window closing
