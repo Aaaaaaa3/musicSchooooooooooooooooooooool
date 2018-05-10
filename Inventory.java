@@ -18,7 +18,6 @@ public class Inventory extends JPanel{
   JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
   public Inventory (){
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(400,300);
     //Print to file once the window is closed
     frame.addWindowListener(new WindowAdapter(){
