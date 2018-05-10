@@ -13,7 +13,7 @@ public class Inventory extends JPanel{
   //declare GUI components
   JFrame frame = new JFrame ("Music Sign Out");
   int index=0;
-  JTextField[] info = new JTextField[67];
+  JLabel[] info = new JLabel[7];
   JButton delete = new JButton ("Delete item"); //delete the item that the user is on right now
   JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
@@ -39,7 +39,7 @@ public class Inventory extends JPanel{
     
     //initialize info
     for (int i=0; i<7; i++){
-      info[i]=new JTextField();
+      info[i]=new JLabel();
     }
     
     //set information when list is not empty
@@ -70,7 +70,7 @@ public class Inventory extends JPanel{
    * @param info        the text field to be edited
    * @param i           which element of the array (for the information)
    */
-  public void setInfo (JTextField[] info, int i){
+  public void setInfo (JLabel[] info, int i){
     info[0].setText("Name: " + MusicResource.getItems().get(i).getName());
     info[1].setText("Number: " + MusicResource.getItems().get(i).getNum());
     if (MusicResource.getItems().get(i).getCondition()==false){ //bad condition
@@ -88,7 +88,7 @@ public class Inventory extends JPanel{
       info[4].setText(Integer.toString(MusicResource.getItems().get(i).getPerson()));
       info[5].setText(MusicResource.getItems().get(i).getDate());
     }
-    info[6].setText(MusicResource.getItems().get(i).getStatus());
+    info[6].setText("Status: " + MusicResource.getItems().get(i).getStatus());
   }
   
   /* search method
