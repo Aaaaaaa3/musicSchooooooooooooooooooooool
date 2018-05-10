@@ -9,7 +9,6 @@ import java.awt.event.*; //imports
 import javax.swing.*;
 import java.time.LocalDate;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class SignOut extends JPanel{
   //components of the GUI
