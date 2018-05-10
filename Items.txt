@@ -1,4 +1,8 @@
-Flute_1 true 1 341153468 2018-05-28 *First flute
-Flute_2 false 2 *Out to repairs
-Trombone_1 true 1 *First trombone
-Tuba_1 true 1 323947408 2018-04-28 *First tuba
+Flute_1 true 1 Instrument 222333333 2018-05-28 *First flute
+Flute_2 false 2 Instrument *Out to repairs
+Trombone_1 true 1 Instrument *First trombone
+Tuba_1 true 1 Instrument 323947408 2018-04-28 *First tuba
+Death_March_1 true 1 Sheet_music *send help
+Deluxe_Stand_100 true 100 Other *nope
+Inferior_Stand_23 false 23 Other *aaaaaaaaaaa
+Need_Coffee_2 true 2 Other *fgvbjhknj
