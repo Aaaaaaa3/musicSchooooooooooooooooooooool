@@ -1,4 +1,0 @@
-Flute_AIDA true 1 "Flute score for AIDA
-Flute_AIDA true 2 "Flute score for AIDA
-Trumpet_Overture true 1 "Trumpet score for Overture
-Percussion_Perseus true 6 "Percussion score for Perseus
