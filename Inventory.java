@@ -5,7 +5,7 @@
  * Displays everything currently in the list
  */
 
-import java.awt.event.*;
+import java.awt.event.*; //imports
 import javax.swing.*;
 
 public class Inventory extends JPanel{
@@ -13,7 +13,7 @@ public class Inventory extends JPanel{
   //declare GUI components
   JFrame frame = new JFrame ("Music Sign Out");
   int index=0;
-  JTextField[] info = new JTextField[6];
+  JTextField[] info = new JTextField[67];
   JButton delete = new JButton ("Delete item"); //delete the item that the user is on right now
   JTextField searchField = new JTextField ("Enter name of item you'd like to search for");
   
@@ -21,50 +21,46 @@ public class Inventory extends JPanel{
   public Inventory (){
     frame.setSize(400,300);
     //Print to file once the window is closed
-    frame.addWindowListener(new WindowAdapter(){
+    frame.addWindowListener(new WindowAdapter(){ //listens for window closing
       public void windowClosing(java.awt.event.WindowEvent windowEvent){
-        MusicResource.printFile(MusicResource.getItems());
+        MusicResource.printFile(MusicResource.getItems()); //prints to file
       }
     });
     //set GUI components
     JPanel panel = new JPanel();
     JButton back = new JButton ("Back");
     JButton next = new JButton ("Next");
-    JButton add = new JButton ("Add item");
-    JButton edit = new JButton ("Edit");
     JButton searchButton = new JButton ("Search");
     
+    //add action listeners
     back.addActionListener(new BackListener());
     next.addActionListener(new NextListener());
-    add.addActionListener(new AddListener());
-    edit.addActionListener(new EditListener());
-    delete.addActionListener(new DeleteListener());
     searchButton.addActionListener(new SearchListener());
     
-    for (int i=0; i<6; i++){
+    //initialize info
+    for (int i=0; i<7; i++){
       info[i]=new JTextField();
     }
+    
     //set information when list is not empty
     if (MusicResource.getItems()!=null){
-    setInfo(info, index);
+      setInfo(info, index);
     }
-    
-    else{
+    else{ //list is empty
       JOptionPane.showMessageDialog(null, "No items!");
     }
-    //add the panels
-    for (int i=0; i<6; i++){
+    //add info onto the panel
+    for (int i=0; i<7; i++){
       panel.add(info[i]);
     }
     
+    //add button and search field
     panel.add(back);
     panel.add(next);
-    panel.add(add);
-    panel.add(delete);
-    panel.add(edit);
     panel.add(searchField);
     panel.add(searchButton);
     
+    //add panel onto frame and set visible
     frame.add(panel);
     frame.setVisible(true);
   }
@@ -72,19 +68,19 @@ public class Inventory extends JPanel{
   /* setInfo
    * assigns information onto the label
    * @param info        the text field to be edited
-   * @param i          
+   * @param i           which element of the array (for the information)
    */
   public void setInfo (JTextField[] info, int i){
     info[0].setText("Name: " + MusicResource.getItems().get(i).getName());
     info[1].setText("Number: " + MusicResource.getItems().get(i).getNum());
-    if (MusicResource.getItems().get(i).getCondition()==false){
+    if (MusicResource.getItems().get(i).getCondition()==false){ //bad condition
       info[2].setText("Condition: Out to repairs");
     }
-    else{
+    else{ //good condition
       info[2].setText("Condition: Good");
     }
     info[3].setText(MusicResource.getItems().get(i).getDescr());
-    if (MusicResource.getItems().get(i).getPerson()==-1){
+    if (MusicResource.getItems().get(i).getPerson()==-1){ //no one has taken it out
       info[4].setText("Not taken out");
       info[5].setText("No due date");
     }
@@ -92,33 +88,43 @@ public class Inventory extends JPanel{
       info[4].setText(Integer.toString(MusicResource.getItems().get(i).getPerson()));
       info[5].setText(MusicResource.getItems().get(i).getDate());
     }
+    info[6].setText(MusicResource.getItems().get(i).getStatus());
   }
   
-  //searches for a value
+  /* search method
+   * @param items - list of items to search through
+   * @param start - first index
+   * @param end - last index
+   * @param item - what you're searching for
+   * @return int index of what you're searching for
+   */
   public int search (DoubleLinkedList<Items> items, int start, int end, String item){
-    if (end-start>=0){
+    if (end-start>=0){ //the list should be sorted
       int mid = (end+start)/2; //middle element of the array
-      
-      if (items.get(mid).getName().equals(item)){
+      if (items.get(mid).getName().equals(item)){ //base case, you have found the item
         return mid;
       }
-      
-      if (items.get(mid).getName().compareTo(item)>0){
+      if (items.get(mid).getName().compareTo(item)>0){ //item is in lower half of list
         return search (items, start, mid-1, item); 
       }
       else{
-        return search (items, mid+1, end, item);
+        return search (items, mid+1, end, item); //item is in upper half of list
       }
     }
     //not in the array
     return -1;
   }
   
+  //inner classes for action listeners
   class BackListener implements ActionListener{
+    /* actionPerformed method
+     * Runs if the sign out button is pressed
+     * @param event - the action that is performed
+     */
     public void actionPerformed(ActionEvent event){
-      if (index>0){
+      if (index>0){ //goes back one element in the list
         index=index-1;
-        setInfo(info, index);
+        setInfo(info, index); //update the label information
       }
       else if (MusicResource.getItems().size()==1){
         JOptionPane.showMessageDialog(null, "There is only one item!");
@@ -126,90 +132,43 @@ public class Inventory extends JPanel{
       else{
         JOptionPane.showMessageDialog(null, "No more items!");
       }
-      System.out.println ("Index: " + index);
     }
   }
   
+  //for the next button
   class NextListener implements ActionListener{
+    /* actionPerformed method
+     * Runs if the sign out button is pressed
+     * @param event - the action that is performed
+     */
     public void actionPerformed(ActionEvent event){
       if (index<MusicResource.getItems().size()-1){
-        index=index+1;
-        setInfo(info, index);
+        index=index+1; //goes forward one element in the list
+        setInfo(info, index); //update the text field's information
       }
-      else if (MusicResource.getItems().size()==1){
+      else if (MusicResource.getItems().size()==1){ 
         JOptionPane.showMessageDialog(null, "There is only one item!");
       }
       else{
         JOptionPane.showMessageDialog(null, "No more items!");
       }
-      System.out.println ("Index: " + index);
-    }
-  }
-  
-  class AddListener implements ActionListener{
-    public void actionPerformed(ActionEvent event){
-      new SignOut();
-    }
-  }
-  
-  //deletes the item that the user is on
-  class DeleteListener implements ActionListener{
-    public void actionPerformed(ActionEvent event){
-      //there are items in the list
-      if (MusicResource.getItems().size()>0){ 
-        //check if item is taken out or at repairs
-        if (MusicResource.getItems().get(index).getCondition()==false ||MusicResource.getItems().get(index).getPerson()!=-1 ){
-          JOptionPane.showMessageDialog(null, "Item is currently taken out or at repairs! Cannot sign out.");
-        }
-        //item is free and in good condition
-        else{
-          MusicResource.getItems().remove(index); //remove the item
-          JOptionPane.showMessageDialog(null, "Item successfully removed!");
-          if (MusicResource.getItems().size()>1){ //two items or more left in the list 
-            if (index>0){ //subtract 1 from index
-              index--;
-            }
-            else{ //index is 0
-              index++;
-            }
-            setInfo(info, index); //display the item's info
-          }
-          else if (MusicResource.getItems().size()==1){ //1 item left in the list
-            index=0; //set index to 0
-            setInfo(info, index);
-          }
-          else if (MusicResource.getItems().size()==0){//removing the last item
-            for (int i=0; i<6; i++){
-              info[i].setText(""); //no info left to display
-            }
-            JOptionPane.showMessageDialog(null, "No more items!");
-            delete.setVisible(false); //don't allow the user to delete any more
-          }
-        }
-      }
-      else{ //nothing in the list
-        JOptionPane.showMessageDialog(null, "No items!");
-        delete.setVisible(false);
-      }
-    }
-  }
-  
-  //edit the item that the user is currently on
-  class EditListener implements ActionListener{
-    public void actionPerformed(ActionEvent event){
-      new Edit();
     }
   }
   
   //search then display
   class SearchListener implements ActionListener{
+    /* actionPerformed method
+     * Runs if the sign out button is pressed
+     * @param event - the action that is performed
+     */
     public void actionPerformed(ActionEvent event){
+      //search for the item
       index=search (MusicResource.getItems(), 0, MusicResource.getItems().size(), searchField.getText());
-      if (index>=0){
-      setInfo(info,index);
+      if (index>=0){ //item was found
+        setInfo(info,index);
       }
       else{
-        MenuGUI.createPopUp("Item not found!");
+        JOptionPane.showMessageDialog(null, "Item not found!");
       }
     }
   }
