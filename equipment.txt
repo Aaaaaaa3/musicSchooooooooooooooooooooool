@@ -1,3 +1,0 @@
-Stand true 1 "Music stand
-Stand true 4 "Music stand
-Flute_Cleaner true 1 "Cleaner for flute
