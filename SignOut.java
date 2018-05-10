@@ -2,17 +2,17 @@
  * Julia Zhao and Tasha Xiao
  * May 02 2018 
  * Version 1.0.0
- * Interface to sign out or add object
+ * Interface to sign out an object
  */
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.*; //imports
 import javax.swing.*;
 import java.time.LocalDate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SignOut extends JPanel{
+  //components of the GUI
   JFrame frame = new JFrame ("Music Sign Out");
   JTabbedPane tabbedPane = new JTabbedPane();
   JTextField studentNum1 = new JTextField("Student number");
@@ -24,15 +24,12 @@ public class SignOut extends JPanel{
   JTextField sheetNum = new JTextField("Sheet Number");
   JTextField equipment = new JTextField ("Equipment");
   JTextField equipNum = new JTextField("Equipment Number");
-  JCheckBox condition1 = new JCheckBox("Good condition?");
-  JCheckBox condition2 = new JCheckBox("Good condition?");
-  JCheckBox condition3 = new JCheckBox("Good condition?");
   
   public SignOut(){ //constructor
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(400,300);
+    frame.setSize(400,300); //sets size of frame
     //Print to file once the window is closed
-    frame.addWindowListener(new WindowAdapter(){
+    frame.addWindowListener(new WindowAdapter(){ //overrides original (default) method of the window closing
       public void windowClosing(java.awt.event.WindowEvent windowEvent){
         MusicResource.printFile(MusicResource.getItems());
       }
@@ -49,52 +46,56 @@ public class SignOut extends JPanel{
     signOut2.addActionListener(new SignOutListener());
     signOut3.addActionListener(new SignOutListener());
     
+    //add components onto the panels
     instrumentPanel.add(studentNum1);
     instrumentPanel.add(instrument);
     instrumentPanel.add(instrNum);
-    instrumentPanel.add(condition1);
     instrumentPanel.add(signOut1);
-
+    
     sheetPanel.add(studentNum2);
     sheetPanel.add(sheetMusic);
     sheetPanel.add(sheetNum);
-    sheetPanel.add(condition2);
     sheetPanel.add(signOut2);
     
     equipmentPanel.add(studentNum3);
     equipmentPanel.add(equipment);
     equipmentPanel.add(equipNum);
-    equipmentPanel.add(condition3);
     equipmentPanel.add(signOut3);
     
+    //adds a new tab
     tabbedPane.addTab("Instrument", instrumentPanel);
     tabbedPane.addTab("Sheet Music", sheetPanel);
     tabbedPane.addTab("Equipment", equipmentPanel);
     
+    //add tabbedPane onto frame and set to visible
     frame.add(tabbedPane); 
     frame.setVisible(true);
   } 
+  //inner class (action listener)
   class SignOutListener implements ActionListener{
+    /* actionPerformed method
+     * Runs if the sign out button is pressed
+     * @param event - the action that is performed
+     */
     public void actionPerformed(ActionEvent event){
       String name="";
       String idNumber="";
       //get the information from the field
-      if (tabbedPane.getSelectedIndex()==0){
-        name=instrument.getText();
-        idNumber = studentNum1.getText();
-        
+      if (tabbedPane.getSelectedIndex()==0){ //instrument tab
+        name=instrument.getText(); //gets value from specified text field
+        idNumber = studentNum1.getText(); 
       }
-      else if (tabbedPane.getSelectedIndex()==1){
+      else if (tabbedPane.getSelectedIndex()==1){//sheet music tab
         name = sheetMusic.getText();
         idNumber = studentNum2.getText();
       }
-      else{ //last tab
+      else{ //equipment tab
         name = equipment.getText();
         idNumber = studentNum3.getText();
       }
       //check if item is found
       Items item = MusicResource.checkItem(name, MusicResource.getItems());
-      if (item==null){
+      if (item==null){ 
         MenuGUI.createPopUp("Item not found in database!");
       }
       else{
@@ -102,18 +103,18 @@ public class SignOut extends JPanel{
         if (item.getCondition()==false){
           MenuGUI.createPopUp("Out to repairs. Cannot be signed out.");
         }
-        else{
+        else{ //item is in good condition
           if (isInt(idNumber)==true){
             //check if item is already signed out by a different user
             if (item.getPerson() !=-1 && item.getPerson()!=Integer.parseInt(idNumber)){
               MenuGUI.createPopUp("Already signed out by someone else!");
             }
-            else{
+            else{ //item may be signed out
               Person student = MusicResource.checkStudent(Integer.parseInt(idNumber), MusicResource.getStudents());
               if (student==null){
                 MenuGUI.createPopUp("Sorry, your student number isn't in the database!");
               }
-              else{
+              else{ //student number is valid
                 item.setPerson(student.getNum());
                 //finds current date
                 String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
@@ -131,13 +132,17 @@ public class SignOut extends JPanel{
     }
   }
   
+  /* isInt method
+   * Checks if the given string contains only numbers
+   * @param str - string to check
+   * @return valid - boolean value, only numbers=true
+   */
   public boolean isInt(String str){
     boolean valid = true;
     int i=0;
-    //check if the instrument number is valid (no letters)
-    do{
-      if (!Character.isDigit(str.charAt(i))){
-        valid=false;
+    do{ //loop while you haven't reached the end of the string and valid is true
+      if (!Character.isDigit(str.charAt(i))){ //not a digit
+        valid=false; //string does not only contain digits
       }
       i++;
     }while (valid==true && i<str.length());
