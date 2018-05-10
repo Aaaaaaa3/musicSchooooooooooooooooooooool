@@ -1,8 +1,15 @@
-import java.awt.*;
+/* Add.java
+ * Julia Zhao and Tasha Xiao
+ * May 09 2018
+ * Version 1.0.0
+ * GUI for adding an item
+ */
 import java.awt.event.*;
 import javax.swing.*;
 
 public class Add extends JPanel implements ActionListener{
+  
+  //add in GUI elements and items list
   JFrame frame2 = new JFrame("add");
   JPanel panel2 = new JPanel();
   JButton ok = new JButton("OK");
@@ -19,17 +26,17 @@ public class Add extends JPanel implements ActionListener{
   JLabel numLab = new JLabel("Number: ");
   JTextField num = new JTextField(10);
   JLabel statusLab = new JLabel("Status: ");
-  String[] statStrings = { "Sheet music", "Instrument", "Other"};
+  String[] statStrings = { "Sheet_music", "Instrument", "Other"};
   JComboBox status = new JComboBox(statStrings);
   
   DoubleLinkedList<Items> list = MusicResource.getItems();
   
+  //constructor
   public Add(){
-
+    //set GUI
     frame2.setVisible(false);
     frame2.setSize(500,500);
-    
-    
+
     ok.addActionListener(this);
     cancel.addActionListener(this);
     
@@ -49,51 +56,57 @@ public class Add extends JPanel implements ActionListener{
     
     frame2.add(panel2);
     frame2.setVisible(true);
-    
-    
-  }
-
-public void actionPerformed(ActionEvent e){
-  if (e.getSource()== ok){
-    Items tempItem = new Items();
-    //check if num is numeric
-    try  
-    {
-      int d = Integer.parseInt(num.getText()); 
-      //check if name is already in list
-      if (MusicResource.checkItem(name.getText(), list) != null){
-        JOptionPane.showMessageDialog(null, "Cannot use this name; already in inventory.");
+  }//end of constructer
+  
+  /* actionPerformed
+   * deals with what happens when you press a button(confirm/cancel)
+   * @param e        the action that is performed
+   */
+  public void actionPerformed(ActionEvent e){
+    //confirms the change
+    if (e.getSource()== ok){
+      Items tempItem = new Items();
+      //check if num is numeric
+      try  
+      {
+        int d = Integer.parseInt(num.getText()); //goes to catch if it's not numeric
+        //check if name is already in list
+        if (MusicResource.checkItem(name.getText(), list) != null){
+          JOptionPane.showMessageDialog(null, "Cannot use this name; already in inventory.");
+        }
+        else{
+          //set information to tempItem
+          tempItem.setName(name.getText());
+          tempItem.setDescr(descr.getText());
+          String cond = (String)condition.getSelectedItem();
+          if (cond.equals("OK")){
+            tempItem.setCondition(true);
+          }
+          else if (cond.equals("Not OK")){
+            tempItem.setCondition(false);
+          }
+          tempItem.setNum(num.getText());
+          
+          tempItem.setStatus((String)status.getSelectedItem());
+          
+          //add tempItem and close the frame
+          list.add(tempItem);
+          DoubleLinkedList.sortAlpha(list);
+          
+          this.setVisible(false);
+          frame2.dispose();
+        }
+      }  
+      catch(NumberFormatException nfe)  
+      {  
+        JOptionPane.showMessageDialog(null, "Number must be numeric!");
       }
-      else{
-      tempItem.setName(name.getText());
-      tempItem.setDescr(descr.getText());
-      String cond = (String)condition.getSelectedItem();
-      if (cond.equals("OK")){
-        tempItem.setCondition(true);
-      }
-      else if (cond.equals("Not OK")){
-        tempItem.setCondition(false);
-      }
-      tempItem.setNum(num.getText());
-      
-      tempItem.setStatus((String)status.getSelectedItem());
-      
-      list.add(tempItem);
-      DoubleLinkedList.sortAlpha(list);
-      
+    }
+    //cancels the change
+    else{
       this.setVisible(false);
       frame2.dispose();
-      }
-    }  
-    catch(NumberFormatException nfe)  
-    {  
-      JOptionPane.showMessageDialog(null, "Number must be numeric!");
     }
-  }
-  else{
-    this.setVisible(false);
-    frame2.dispose();
-  }
-  
-}
-}
+    
+  }//end of actionPerformed
+}//end of Add.java
