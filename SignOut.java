@@ -37,7 +37,6 @@ public class SignOut extends JPanel{
         MusicResource.printFile(MusicResource.getItems());
       }
     });
-    //super(new GridLayout(1, 1));
     JPanel instrumentPanel = new JPanel();
     JPanel sheetPanel = new JPanel();
     JPanel equipmentPanel = new JPanel();
@@ -46,24 +45,16 @@ public class SignOut extends JPanel{
     JButton signOut2 = new JButton ("Sign Out");
     JButton signOut3 = new JButton ("Sign Out");
     
-    JButton add1 = new JButton ("Add Entry");
-    JButton add2 = new JButton ("Add Entry");
-    JButton add3 = new JButton ("Add Entry");
-    
     signOut1.addActionListener(new SignOutListener());
     signOut2.addActionListener(new SignOutListener());
     signOut3.addActionListener(new SignOutListener());
-    add1.addActionListener (new AddListener());
-    add2.addActionListener (new AddListener());
-    add3.addActionListener (new AddListener());
     
     instrumentPanel.add(studentNum1);
     instrumentPanel.add(instrument);
     instrumentPanel.add(instrNum);
     instrumentPanel.add(condition1);
     instrumentPanel.add(signOut1);
-    instrumentPanel.add(add1);
-    
+
     sheetPanel.add(studentNum2);
     sheetPanel.add(sheetMusic);
     sheetPanel.add(sheetNum);
@@ -136,78 +127,6 @@ public class SignOut extends JPanel{
             MenuGUI.createPopUp("Please make sure the student number only has numbers!");
           }
         }
-      }
-    }
-  }
-  
-  class AddListener implements ActionListener{
-    public void actionPerformed(ActionEvent event){
-      //make sure the instrument is not already in the system  
-      String name="";
-      String itemNum="";
-      String stuNum="";
-      //get the information from the field
-      if (tabbedPane.getSelectedIndex()==0){
-        name = instrument.getText();
-        itemNum=instrNum.getText();
-        stuNum=studentNum1.getText();
-      }
-      else if (tabbedPane.getSelectedIndex()==1){
-        name=sheetMusic.getText();
-        itemNum=sheetNum.getText();
-        stuNum=studentNum2.getText();
-      }
-      else{ //last tab
-        name=equipment.getText();
-        itemNum=equipNum.getText();
-        stuNum=studentNum3.getText();
-      }     
-      //check if item is found
-      Items item = MusicResource.checkItem(name, MusicResource.getItems());
-      if (item==null){
-        boolean validNum;
-        
-        if (itemNum.equals("")){
-          validNum=false;
-        }
-        else{
-          validNum=isInt(itemNum);//check if instrument number is valid (no letters)
-        }
-        boolean validStudentNum=false;
-        
-        if (validNum==false){
-          MenuGUI.createPopUp("Instrument number is not valid. Can't add.");
-        }
-        
-        if (!stuNum.equals("")){ //blank student number = instrument not assigned 
-          validStudentNum=isInt(stuNum);//check if student number is valid (no letters)
-          
-          if (validStudentNum==false){
-            MenuGUI.createPopUp("Student number is not valid. Can't add.");
-          }
-        }
-        else{
-          Items newItem = new Items();
-          newItem.setName(name);
-          newItem.setCondition(condition1.isSelected());
-          newItem.setNum(itemNum);
-          if (validStudentNum==true){ //student has been assigned
-            newItem.setPerson(Integer.parseInt(stuNum));
-            //finds current date
-            String tempDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-            //increases day by 1
-            item.setDate(LocalDate.parse(tempDate).plusDays(1).toString());
-          }
-          if (condition1.isSelected()==false){
-            newItem.setDescr("Out to repairs");
-          }
-          MusicResource.getItems().add(newItem); //add new item into database
-          DoubleLinkedList.sortAlpha(MusicResource.getItems());
-        }
-      }
-      
-      else{
-        MenuGUI.createPopUp("Item is already found in database! Can't add.");
       }
     }
   }
