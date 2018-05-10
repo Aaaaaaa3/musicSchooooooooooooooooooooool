@@ -83,8 +83,8 @@ public class Inventory extends JPanel{
       info[5].setText("No due date");
     }
     else{
-      info[4] = new JTextField(Integer.toString(MusicResource.getItems().get(i).getPerson()));
-      info[5] = new JTextField(MusicResource.getItems().get(i).getDate());
+      info[4].setText(Integer.toString(MusicResource.getItems().get(i).getPerson()));
+      info[5].setText(MusicResource.getItems().get(i).getDate());
     }
   }
   
